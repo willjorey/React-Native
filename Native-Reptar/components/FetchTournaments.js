@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View , FlatList} from 'react-native';
+import { StyleSheet, Text, View, FlatList} from 'react-native';
 import { List, ListItem } from 'react-native-elements';
+
 
 export default class FetchTournaments extends React.Component{
     constructor(props){
         super(props);
         this.state ={
-            tournaments: null
+            tournaments: []
         };
     };
 
@@ -36,19 +37,25 @@ export default class FetchTournaments extends React.Component{
     render(){
         return (
             <View>
-                {/* <List>
-                    <FlatList data={this.state.tournaments}
-                    renderItem={ ({item}) => (
-                        <ListItem
-                        title={item.name}
-                        />
+                <List>
+                    {this.state.tournaments.map( (item,i) =>
+                         <ListItem
+                         key={item.name}
+                         title={item.name}
+                       />
                     )}
-                    />
-                </List>     */}
+                </List>
             </View>
         );
     }
 
 };
+
+const styles = StyleSheet.create({
+    item: {
+        margin:5,
+
+    },
+  });
 
 
