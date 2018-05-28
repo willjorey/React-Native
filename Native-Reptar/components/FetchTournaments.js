@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList} from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import { List, ListItem, Button } from 'react-native-elements';
+import { createStackNavigator } from 'react-navigation';
 
 
 export default class FetchTournaments extends React.Component{
@@ -18,6 +19,7 @@ export default class FetchTournaments extends React.Component{
             const t_array = [];
             for (const key in parsedres){
                 t_array.push({
+                    key:key,
                     age: parsedres[key].age,
                     date: parsedres[key].date,
                     gender: parsedres[key].gender,
@@ -39,10 +41,11 @@ export default class FetchTournaments extends React.Component{
             <View>
                 <List>
                     {this.state.tournaments.map( (item,i) =>
-                         <ListItem
-                         key={item.name}
-                         title={item.name}
-                       />
+                        <ListItem
+                        key={item.key}
+                        title={item.name}
+                    
+                        />
                     )}
                 </List>
             </View>
@@ -54,7 +57,6 @@ export default class FetchTournaments extends React.Component{
 const styles = StyleSheet.create({
     item: {
         margin:5,
-
     },
   });
 
