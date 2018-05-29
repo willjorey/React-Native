@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import FetchTournaments from './FetchTournaments';
-import { Header, Button} from 'react-native-elements';
+import { Header } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation';
 
 

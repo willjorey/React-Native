@@ -30,7 +30,6 @@ export default class FetchTournaments extends React.Component{
             this.setState({
                 tournaments: t_array
             });
-            console.log(this.state.tournaments);
         });
     }
     componentDidMount(){
@@ -45,7 +44,7 @@ export default class FetchTournaments extends React.Component{
                         <ListItem
                         key={item.key}
                         title={item.name}
-                        onPress={() => this.navigation.navigate('Tournament')}
+                        onPress={() => this.navigation.navigate('Tournament', {id: item.key, item: item} )}
                         />
                     )}
                 </List>
