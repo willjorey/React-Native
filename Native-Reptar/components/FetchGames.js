@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList} from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
 import { Card, List, ListItem, Button } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation';
 
@@ -26,6 +26,8 @@ export default class FetchGames extends React.Component{
                         homeName: parsedres[key].homeID,
                         awayScore: parsedres[key].awayScore,
                         homeScore: parsedres[key].homeScore,
+                        awayLogo: parsedres[key].awayURL,
+                        homeLogo: parsedres[key].homeURL,
                         tid: parsedres[key].tid,
                         time: parsedres[key].time,
                     });
@@ -45,8 +47,21 @@ export default class FetchGames extends React.Component{
             <Card>
                 {this.state.games.map( (game, i) =>{
                     return (
-                        <View key={i}>
-                            <Text style={styles.game}>{game.homeName} vs {game.awayName}</Text>
+                        <View key={i} >
+                            <View style={styles.game}>
+                                <Image
+                                style={styles.logo}
+                                resizeMode='cover'
+                                source={ {uri: game.homeLogo}}
+                                />
+                                <Text style={styles.game_info}>{game.homeName} vs {game.awayName} </Text>
+                                <Image
+                                style={styles.logo}
+                                resizeMode='cover'
+                                source={ {uri: game.awayLogo}}
+                                />
+                            </View>
+                            <Text style={styles.score}>{game.homeScore} - {game.awayScore} </Text>
                         </View>
                     )
                 } )}
@@ -58,10 +73,24 @@ export default class FetchGames extends React.Component{
 
 const styles = StyleSheet.create({
     game: {
-        margin:5,
-        textAlign: 'center',
+        flexWrap: 'wrap', 
+        alignItems: 'flex-start',
+        flexDirection:'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    game_info:{
         fontSize: 20,
     },
+    logo:{
+        margin:10,
+        height:50,
+        width:50
+    },
+    score:{
+        textAlign:'center',
+        fontSize: 20,
+    }
   });
 
 

@@ -23,6 +23,8 @@ export default class TournamentScreen extends React.Component {
           <Text style={styles.tournament_info}>Age: {this.tournament.age} </Text>
           <Text style={styles.tournament_info}>Gender: {this.tournament.gender} </Text>
         </View>
+
+        <Text style={styles.games}>All Games</Text>
         <FetchGames tid={this.tournament.key}/>
       </View>
     );
@@ -36,5 +38,9 @@ const styles = StyleSheet.create({
   },
   tournament_info:{
     fontSize: 20
+  },
+  games:{
+    textAlign:'center',
+    fontSize:30,
   }
 });
