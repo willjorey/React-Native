@@ -1,9 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import FetchTournaments from './FetchTournaments';
-import { Header } from 'react-native-elements';
+import { Header, Button} from 'react-native-elements';
+import { createStackNavigator } from 'react-navigation';
+
 
 export default class HomeScreen extends React.Component {
+  constructor(props){
+    super(props);
+      this.navigation = this.props.navigation;
+  }
   static navigationOptions = {
     title: 'Home'
   }
@@ -11,7 +17,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Header centerComponent={{text: 'Tournaments', style: { color: '#fff', fontSize:25 }}}/>
-        <FetchTournaments/>
+        <FetchTournaments navigation={this.navigation}/>
       </View>
     );
   }

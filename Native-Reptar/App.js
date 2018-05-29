@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import FetchTournaments from './components/FetchTournaments';
 import HomeScreen from './components/HomeScreen';
 import TournamentScreen from './components/TournamentScreen';
 import { createStackNavigator } from 'react-navigation';

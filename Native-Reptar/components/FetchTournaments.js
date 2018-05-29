@@ -7,6 +7,7 @@ import { createStackNavigator } from 'react-navigation';
 export default class FetchTournaments extends React.Component{
     constructor(props){
         super(props);
+        this.navigation = this.props.navigation;
         this.state ={
             tournaments: []
         };
@@ -44,7 +45,7 @@ export default class FetchTournaments extends React.Component{
                         <ListItem
                         key={item.key}
                         title={item.name}
-                    
+                        onPress={() => this.navigation.navigate('Tournament')}
                         />
                     )}
                 </List>
