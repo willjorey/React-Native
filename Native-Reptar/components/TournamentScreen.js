@@ -8,8 +8,6 @@ export default class TournamentScreen extends React.Component {
     super(props);
     const { navigation } = this.props;
     this.tournament = navigation.getParam('item');
-    console.log(navigation.getParam('id'));
-    console.log(navigation.getParam('item'));
   }
   static navigationOptions = {
     title: 'Tournament'
@@ -25,7 +23,7 @@ export default class TournamentScreen extends React.Component {
         </View>
 
         <Text style={styles.games}>All Games</Text>
-        <FetchGames tid={this.tournament.key}/>
+        <FetchGames tid={this.tournament.key} navigation={this.props.navigation}/>
       </View>
     );
   }

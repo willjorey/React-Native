@@ -8,6 +8,7 @@ export default class FetchGames extends React.Component{
     constructor(props){
         super(props);
         this.tid = this.props.tid;
+        this.navigation = this.props.navigation;
         this.state ={
             games: []
         };
@@ -44,12 +45,17 @@ export default class FetchGames extends React.Component{
     
     render(){
         return (
-            <Card>
+            <Card containerStyle={{padding:0}}>
                 {this.state.games.map( (game, i) =>{
                     return (
-                        <View key={i} >
-                            <View style={styles.game}>
-                                <Image
+                        <View key={i} style={styles.game}>
+                            <ListItem
+                                title={ game.homeName + " vs " + game.awayName }
+                                subtitle= { game.homeScore + " - " + game.awayScore}
+                                onPress={() => this.navigation.navigate('Game', {game: game})}
+                            />
+                            {/* <View style={styles.game}> */}
+                                {/* <Image
                                 style={styles.logo}
                                 resizeMode='cover'
                                 source={ {uri: game.homeLogo}}
@@ -61,7 +67,7 @@ export default class FetchGames extends React.Component{
                                 source={ {uri: game.awayLogo}}
                                 />
                             </View>
-                            <Text style={styles.score}>{game.homeScore} - {game.awayScore} </Text>
+                            <Text style={styles.score}>{game.homeScore} - {game.awayScore} </Text> */}
                         </View>
                     )
                 } )}
@@ -73,23 +79,7 @@ export default class FetchGames extends React.Component{
 
 const styles = StyleSheet.create({
     game: {
-        flexWrap: 'wrap', 
-        alignItems: 'flex-start',
-        flexDirection:'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    game_info:{
-        fontSize: 20,
-    },
-    logo:{
-        margin:10,
-        height:50,
-        width:50
-    },
-    score:{
-        textAlign:'center',
-        fontSize: 20,
+
     }
   });
 

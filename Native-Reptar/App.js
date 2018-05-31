@@ -2,11 +2,13 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './components/HomeScreen';
 import TournamentScreen from './components/TournamentScreen';
+import GameScreen from './components/GameScreen';
 import { createStackNavigator } from 'react-navigation';
 
 const NavigationApp = createStackNavigator({
   Home: HomeScreen,
   Tournament: TournamentScreen,
+  Game: GameScreen,
   },
   {
     initialRouteName: 'Home',
