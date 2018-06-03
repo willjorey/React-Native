@@ -58,6 +58,10 @@ const styles = StyleSheet.create({
     item: {
         margin:5,
     },
+    headerText:{
+        margin:6,
+        fontSize:15
+      }
   });
 
 

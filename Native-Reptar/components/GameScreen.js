@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, ScrollView} from 'react-native';
 import { Header, Text, Card } from 'react-native-elements';
+import BoxScore from './BoxScore'
 
 export default class GameScreen extends React.Component {
   constructor(props){
@@ -8,10 +9,11 @@ export default class GameScreen extends React.Component {
     const { navigation } = this.props;
     this.game = navigation.getParam('game');
     console.log(this.game);
-  }
+  };
   static navigationOptions = {
     title: 'Game'
-  }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -29,6 +31,7 @@ export default class GameScreen extends React.Component {
             source={ {uri: this.game.awayLogo}}
             />
         </View>
+        <BoxScore/>
       </View>
     );
   }
@@ -58,6 +61,9 @@ const styles = StyleSheet.create({
   title:{
       justifyContent:'center',
       textAlign:'center',
-
+  },
+  headerText:{
+    margin:6,
+    fontSize:15
   }
 });

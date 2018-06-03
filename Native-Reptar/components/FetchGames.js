@@ -54,20 +54,6 @@ export default class FetchGames extends React.Component{
                                 subtitle= { game.homeScore + " - " + game.awayScore}
                                 onPress={() => this.navigation.navigate('Game', {game: game})}
                             />
-                            {/* <View style={styles.game}> */}
-                                {/* <Image
-                                style={styles.logo}
-                                resizeMode='cover'
-                                source={ {uri: game.homeLogo}}
-                                />
-                                <Text style={styles.game_info}>{game.homeName} vs {game.awayName} </Text>
-                                <Image
-                                style={styles.logo}
-                                resizeMode='cover'
-                                source={ {uri: game.awayLogo}}
-                                />
-                            </View>
-                            <Text style={styles.score}>{game.homeScore} - {game.awayScore} </Text> */}
                         </View>
                     )
                 } )}
