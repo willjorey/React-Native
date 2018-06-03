@@ -9,8 +9,10 @@ export default class BoxScore extends React.Component{
     constructor(props){
         super(props);
         this.navigation = this.props.navigation;
+        var width = 50;
         this.state ={
-            header: ['POS','MIN', 'PTS', 'REB', 'AST', 'STL', 'BLK', 'FGM','FGA', 'FG%', '3PM', '3PA', '3P%','FTM', 'FTA', 'FT%', 'OREB', 'DREB', 'TOV', 'PF','+/-'],
+            header: ['Name','POS','MIN', 'PTS', 'REB', 'AST', 'STL', 'BLK', 'FGM','FGA', 'FG%', '3PM', '3PA', '3P%','FTM', 'FTA', 'FT%', 'OFF', 'DEF', 'TOV', 'PF','+/-'],
+            widthArray: [70 ,width, width, width,width,width,width,width,width,width, width, width,width,width,width,width,width,width, width, width,width],
             stats: [],
         };
     };
@@ -23,6 +25,7 @@ export default class BoxScore extends React.Component{
             for (const key in parsedres){
                 t_array.push({
                     key:key,
+                    NAME: parsedres[key].NAME,
                     POS: parsedres[key].POS,
                     MIN: parsedres[key].MIN,
                     PTS: parsedres[key].PTS,
@@ -62,7 +65,7 @@ export default class BoxScore extends React.Component{
                 <ScrollView horizontal={true}>
                     <View>
                     <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-                        <Row data={this.state.header} textStyle={styles.headerText}/>
+                        <Row data={this.state.header} textStyle={styles.headerText} widthArr={this.state.widthArray}/>
                     </Table>
                     <ScrollView>
                     <Table borderStyle={{borderColor: '#C1C0B9'}}>                
@@ -71,6 +74,8 @@ export default class BoxScore extends React.Component{
                             <Row
                             key={index}
                             data={Object.values(this.state.stats[index]).slice(1)}
+                            widthArr={this.state.widthArray}
+                            textStyle={styles.dataText}
                             />   
                         ))
                         }
@@ -88,6 +93,14 @@ const styles = StyleSheet.create({
     item: {
         margin:5,
     },
+    headerText:{
+        margin:3,
+        fontSize:15
+    },
+    dataText:{
+        fontSize:15,
+        textAlign:'center'
+    }
   });
 
 
