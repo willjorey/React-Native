@@ -31,6 +31,8 @@ export default class FetchGames extends React.Component{
                         homeLogo: parsedres[key].homeURL,
                         tid: parsedres[key].tid,
                         time: parsedres[key].time,
+                        homeTeamID: parsedres[key].homeTeamID,
+                        awayTeamID: parsedres[key].awayTeamID,
                     });
                 }
             };

@@ -8,7 +8,6 @@ export default class GameScreen extends React.Component {
     super(props);
     const { navigation } = this.props;
     this.game = navigation.getParam('game');
-    console.log(this.game);
   };
   static navigationOptions = {
     title: 'Game'
@@ -31,7 +30,7 @@ export default class GameScreen extends React.Component {
             source={ {uri: this.game.awayLogo}}
             />
         </View>
-        <BoxScore/>
+        <BoxScore game={this.game}/>
       </View>
     );
   }
@@ -51,12 +50,11 @@ const styles = StyleSheet.create({
   },
   text:{
     fontSize:30,
-    padding:50,
+    padding:30,
   },
   logo:{
       height:100,
       width:100,
-      padding:10,
   },
   title:{
       justifyContent:'center',
