@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Image, ScrollView, Text} from 'react-native';
+import { StyleSheet, View, Image, ScrollView} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
-import { List, ListItem, Button } from 'react-native-elements';
+import { List, ListItem, Button, Text } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation';
 
 
@@ -11,10 +11,12 @@ export default class BoxScore extends React.Component{
         this.game = this.props.game;
         this.homeID = this.game['homeTeamID'];
         this.awayID = this.game['awayTeamID'];
+        this.homeName = this.game['homeName'];
+        this.awayName = this.game['awayName'];
 
         var width = 50;
         this.state ={
-            title: this.game['homeID'],
+            title: this.homeName,
             header: ['Name','POS','MIN', 'PTS', 'REB', 'AST', 'STL', 'BLK', 'FGM','FGA', 'FG%', '3PM', '3PA', '3P%','FTM', 'FTA', 'FT%', 'OFF', 'DEF', 'TOV', 'PF','+/-'],
             widthArray: [70 ,width, width, width,width,width,width,width,width,width, width, width,width,width,width,width,width,width, width, width,width],
             home_stats: [],
@@ -91,17 +93,19 @@ export default class BoxScore extends React.Component{
         var name;
         if(this.state.toggle_table){
             stats = this.state.home_stats;
-            name = this.game['homeID']
+            name = this.homeName
         }else{
             stats = this.state.away_stats;
-            name = this.game['awayID']
+            name = this.awayName
         }
         return (
             <View style={styles.container}>
+                <Text h1 style={styles.Team_Name}>{name}</Text>
                 <View style={styles.button_container}>
                     <Button backgroundColor="black" color="white" title='Home' onPress={this.toggle_home}/>
                     <Button backgroundColor="black" color="white" title='Away' onPress={this.toggle_away}/>    
                 </View>
+                
                 <ScrollView horizontal={true}>
                     <View>
                         <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
@@ -129,7 +133,7 @@ export default class BoxScore extends React.Component{
 };
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+    container: { flex: 1, padding: 16, paddingTop: 30 },
     item: {
         margin:5,
     },
@@ -148,6 +152,9 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: 'center',
     },
+    Team_Name: {
+        textAlign: 'center'
+    }
   });
 
 
