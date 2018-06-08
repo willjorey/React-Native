@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
 import { Card, List, ListItem, Button } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation';
-
+import Game from './Game_obj'
 
 export default class FetchGames extends React.Component{
     constructor(props){
@@ -21,19 +21,8 @@ export default class FetchGames extends React.Component{
             const t_array = [];
             for (const key in parsedres){
                 if( parsedres[key].tid === this.tid){
-                    t_array.push({
-                        key:key,
-                        awayName: parsedres[key].awayID,
-                        homeName: parsedres[key].homeID,
-                        awayScore: parsedres[key].awayScore,
-                        homeScore: parsedres[key].homeScore,
-                        awayLogo: parsedres[key].awayURL,
-                        homeLogo: parsedres[key].homeURL,
-                        tid: parsedres[key].tid,
-                        time: parsedres[key].time,
-                        homeTeamID: parsedres[key].homeTeamID,
-                        awayTeamID: parsedres[key].awayTeamID,
-                    });
+                    let game = new Game(key,parsedres[key].awayID, parsedres[key].homeID, parsedres[key].awayScore, parsedres[key].homeScore, parsedres[key].awayURL, parsedres[key].homeURL, parsedres[key].tid, parsedres[key].time, parsedres[key].homeTeamID, parsedres[key].awayTeamID,)
+                    t_array.push(game);
                 }
             };
             this.setState({

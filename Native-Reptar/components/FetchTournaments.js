@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList} from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation';
-
+import Tournament from './Tournament_obj'
 
 export default class FetchTournaments extends React.Component{
     constructor(props){
@@ -19,13 +19,8 @@ export default class FetchTournaments extends React.Component{
         .then(parsedres => {
             const t_array = [];
             for (const key in parsedres){
-                t_array.push({
-                    key:key,
-                    age: parsedres[key].age,
-                    date: parsedres[key].date,
-                    gender: parsedres[key].gender,
-                    name: parsedres[key].name
-                });
+                let tournament = new Tournament(key,parsedres[key].age, parsedres[key].date, parsedres[key].gender, parsedres[key].name);
+                t_array.push(tournament);
             };
             this.setState({
                 tournaments: t_array

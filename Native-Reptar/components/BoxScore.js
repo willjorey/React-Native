@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     },
     Team_Name: {
         textAlign: 'center'
-    }
+    },
   });
 
 

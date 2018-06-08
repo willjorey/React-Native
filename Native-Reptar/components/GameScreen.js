@@ -16,6 +16,7 @@ export default class GameScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <ScrollView>
         <Text style={styles.title} h1>Box Score</Text>
         <View style={styles.score}>
             <Image
@@ -31,6 +32,7 @@ export default class GameScreen extends React.Component {
             />
         </View>
         <BoxScore game={this.game}/>
+        </ScrollView>
       </View>
     );
   }
