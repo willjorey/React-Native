@@ -6,4 +6,11 @@ export default class Tournament{
         this.gender = gender;
         this.name = name;
     }
+
+    getKey = () =>{
+        return this.key;
+    }
+    getName = () =>{
+        return this.name;
+    }
 }

@@ -3,6 +3,7 @@ import { StyleSheet, View, Image, ScrollView} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import { List, ListItem, Button, Text } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation';
+import PlayerStat from './PlayerStat_obj';
 
 
 export default class BoxScore extends React.Component{
@@ -32,37 +33,14 @@ export default class BoxScore extends React.Component{
             const home_stats = [];
             const away_stats = [];
             for (const key in parsedres){
-                var team_id = parsedres[key].team_ID;
-                var team_obj = {
-                    key:key,
-                    NAME: parsedres[key].NAME,
-                    POS: parsedres[key].POS,
-                    MIN: parsedres[key].MIN,
-                    PTS: parsedres[key].PTS,
-                    REB: parsedres[key].REB,
-                    AST: parsedres[key].AST,
-                    STL: parsedres[key].STL,
-                    BLK: parsedres[key].BLK,
-                    FGM: parsedres[key].FGM,
-                    FGA: parsedres[key].FGA,
-                    FG_PERC: parsedres[key].FG_PERC,
-                    THREE_PM: parsedres[key].THREE_PM,
-                    THREE_PA: parsedres[key].THREE_PA,
-                    THREE_PERC: parsedres[key].THREE_PERC,
-                    FTM: parsedres[key].FTM,
-                    FTA: parsedres[key].FTA,
-                    FT_PERC: parsedres[key].FT_PERC,
-                    OFF: parsedres[key].OFF,
-                    DEF: parsedres[key].DEF,
-                    TOV: parsedres[key].TOV,
-                    PF: parsedres[key].PF,
-                    PLUS_MINUS: parsedres[key].PLUS_MINUS,
-                    TEAM_ID: parsedres[key].team_ID,
-                }
+
+                let team_id = parsedres[key].team_ID;
+                let playerStat = new PlayerStat(key, parsedres[key].NAME,parsedres[key].POS,parsedres[key].MIN, parsedres[key].PTS, parsedres[key].REB, parsedres[key].AST,parsedres[key].STL, parsedres[key].BLK, parsedres[key].FGM,parsedres[key].FGA, parsedres[key].FG_PERC, parsedres[key].THREE_PM, parsedres[key].THREE_PA, parsedres[key].THREE_PERC,parsedres[key].FTM, parsedres[key].FTA, parsedres[key].FT_PERC, parsedres[key].OFF, parsedres[key].DEF,parsedres[key].TOV, parsedres[key].PF, parsedres[key].PLUS_MINUS, team_id);
+                
                 if( team_id === this.homeID){
-                    home_stats.push(team_obj);
+                    home_stats.push(playerStat);
                 }else{
-                    away_stats.push(team_obj);
+                    away_stats.push(playerStat);
                 }
             };
 

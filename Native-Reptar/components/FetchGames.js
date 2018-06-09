@@ -21,7 +21,7 @@ export default class FetchGames extends React.Component{
             const t_array = [];
             for (const key in parsedres){
                 if( parsedres[key].tid === this.tid){
-                    let game = new Game(key,parsedres[key].awayID, parsedres[key].homeID, parsedres[key].awayScore, parsedres[key].homeScore, parsedres[key].awayURL, parsedres[key].homeURL, parsedres[key].tid, parsedres[key].time, parsedres[key].homeTeamID, parsedres[key].awayTeamID,)
+                    let game = new Game(key,parsedres[key].awayID, parsedres[key].homeID, parsedres[key].awayScore, parsedres[key].homeScore, parsedres[key].awayURL, parsedres[key].homeURL, parsedres[key].tid, parsedres[key].time, parsedres[key].homeTeamID, parsedres[key].awayTeamID)
                     t_array.push(game);
                 }
             };
@@ -41,8 +41,8 @@ export default class FetchGames extends React.Component{
                     return (
                         <View key={i} style={styles.game}>
                             <ListItem
-                                title={ game.homeName + " vs " + game.awayName }
-                                subtitle= { game.homeScore + " - " + game.awayScore}
+                                title={ game.getHomeName() + " vs " + game.getAwayName() }
+                                subtitle= { game.getHomeScore() + " - " + game.getAwayScore()}
                                 onPress={() => this.navigation.navigate('Game', {game: game})}
                             />
                         </View>

@@ -12,4 +12,18 @@ export default class Game{
         this.homeTeamID = homeTeamID;
         this.awayTeamID = awayTeamID;
     }
+
+    getHomeName = () => {
+        return this.homeName;
+    };
+    getAwayName = () => {
+        return this.awayName;
+    };
+    getHomeScore = () => {
+        return this.homeScore;
+    };
+    getAwayScore = () => {
+        return this.awayScore;
+    };
+
 }

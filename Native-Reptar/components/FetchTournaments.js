@@ -4,6 +4,7 @@ import { List, ListItem, Button } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation';
 import Tournament from './Tournament_obj'
 
+
 export default class FetchTournaments extends React.Component{
     constructor(props){
         super(props);
@@ -37,9 +38,9 @@ export default class FetchTournaments extends React.Component{
                 <List>
                     {this.state.tournaments.map( (item,i) =>
                         <ListItem
-                        key={item.key}
-                        title={item.name}
-                        onPress={() => this.navigation.navigate('Tournament', {id: item.key, item: item} )}
+                        key={item.getKey()}
+                        title={item.getName()}
+                        onPress={() => this.navigation.navigate('Tournament', {id: item.getKey(), item: item} )}
                         />
                     )}
                 </List>
