@@ -18,7 +18,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       input: "",
-      budget: 500,
+      budget: "500",
       bill: "0.00",
       tip: "0.00",
     }
@@ -45,8 +45,11 @@ export default class HomeScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.getStartedContainer}>
             <Text style={styles.getStartedText}>Your Budget</Text>
+            
             <View style={styles.welcomeContainer}> 
-              <Text style={styles.budget}>${this.state.budget}</Text>
+              <Text style={styles.budget}>$</Text>
+              <TextInput style={styles.budget} underlineColorAndroid="transparent" keyboardType='numeric' value={this.state.budget}  onChangeText={ (value) => this.setState({budget:value})}/>
+              {/* <Text style={styles.budget}>${this.state.budget}</Text> */}
             </View>
 
             <View>
@@ -108,6 +111,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   welcomeContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
     marginBottom: 20,
