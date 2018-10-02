@@ -18,8 +18,8 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       input: "",
-      budget: "500",
-      bill: "0.00",
+      budget: "300",
+      bill: "0",
       tip: "0.00",
     }
   }
@@ -37,6 +37,17 @@ export default class HomeScreen extends React.Component {
       budget: this.state.input,
     })
   };
+  onPressPay = () =>{
+    let tax = 0.13;
+    let deduct = Number(this.state.tip) + Number(this.state.bill);
+    let bal = Number(this.state.budget) - deduct;
+    let transaction = new Transaction(deduct, tax, this.tip);
+    if(bal > 0){
+      this.setState({
+        budget: bal.toString()
+      });
+    };
+  }
 
 
   render() {
@@ -53,8 +64,10 @@ export default class HomeScreen extends React.Component {
             </View>
 
             <View>
-              <Text style={styles.calculatorTitle}>Enter Amount</Text>
+              <Text style={styles.calculatorTitle}>Enter Total to Pay</Text>
               <TextInput  style={styles.billAmount}  keyboardType='numeric' value={this.state.bill} onChangeText={ (value) => this.setState({bill:value})}/>
+
+              <Text>Add Tip Percentage</Text>
               
               <TouchableOpacity style={styles.button} onPress={ () => this.setState({tip: (this.state.bill * 0.10).toFixed(2)})}>
                 <Text style={styles.tipText}>10%</Text>
@@ -69,6 +82,10 @@ export default class HomeScreen extends React.Component {
               </TouchableOpacity>
 
               <Text style={styles.calculatorTitle}>Tip: ${this.state.tip}</Text>
+
+              <TouchableOpacity style={styles.payButton} onPress={this.onPressPay}>
+                <Text style={styles.tipText}>Pay</Text>
+              </TouchableOpacity>
             </View>
 
           </View>
@@ -88,6 +105,12 @@ const styles = StyleSheet.create({
     fontSize:25,
     color: 'white',
   },
+  payButton:{
+    alignItems: 'center',
+    backgroundColor: '#FF3838',
+    padding: 10,
+    height: 55,
+  },
   button: {
     alignItems: 'center',
     backgroundColor: '#336EFF',
@@ -104,7 +127,7 @@ const styles = StyleSheet.create({
     color: 'green',
   },
   calculatorTitle:{
-    fontSize:50,
+    fontSize:30,
   },
 
   contentContainer: {
