@@ -13,16 +13,36 @@ import {
 import { WebBrowser } from 'expo';
 import Transaction from '../components/Transaction';
 
+var MongoClient = require('mongodb').MongoClient;
+
+var uri = "mongodb+srv://William:William007@mycluster-gea94.mongodb.net/test?retryWrites=true";
+MongoClient.connect(uri, function(err, client) {
+   const collection = client.db("test").collection("devices");
+   // perform actions on the collection object
+   client.close();
+});
+
 export default class HomeScreen extends React.Component {
   constructor(props){
     super(props);
+
     this.state = {
       input: "",
       budget: "300",
       bill: "0",
       tip: "0.00",
     }
+
+    var MongoClient = require('mongodb').MongoClient;
+    var uri = "mongodb+srv://William:William007@mycluster-gea94.mongodb.net/test?retryWrites=true";
+    MongoClient.connect(uri, function(err, client) {
+      const collection = client.db("MyDatabase").collection("Transactions");
+      // perform actions on the collection object
+      client.close();
+    });
   }
+
+  
   static navigationOptions = {
     header: null,
   };
