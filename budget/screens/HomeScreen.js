@@ -31,6 +31,7 @@ export default class HomeScreen extends React.Component {
       budget: "300",
       bill: "0",
       tip: "0.00",
+      test: true,
     }
 
     var MongoClient = require('mongodb').MongoClient;
@@ -38,6 +39,9 @@ export default class HomeScreen extends React.Component {
     MongoClient.connect(uri, function(err, client) {
       const collection = client.db("MyDatabase").collection("Transactions");
       // perform actions on the collection object
+      this.setState({
+        test: false,
+      })
       client.close();
     });
   }
@@ -61,7 +65,6 @@ export default class HomeScreen extends React.Component {
     let tax = 0.13;
     let deduct = Number(this.state.tip) + Number(this.state.bill);
     let bal = Number(this.state.budget) - deduct;
-    let transaction = new Transaction(deduct, tax, this.tip);
     if(bal > 0){
       this.setState({
         budget: bal.toString()
