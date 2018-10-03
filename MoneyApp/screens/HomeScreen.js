@@ -9,9 +9,6 @@ import {
   View,
   TextInput,
 } from 'react-native';
-import { WebBrowser } from 'expo';
-
-import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
   constructor(props){
@@ -28,6 +25,11 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
+  sum = (a,b) => {
+    return a + b;
+  }
+  
 
   setBudget = (value) =>{
     this.setState({
@@ -60,7 +62,6 @@ export default class HomeScreen extends React.Component {
             <View style={styles.welcomeContainer}> 
               <Text style={styles.budget}>$</Text>
               <TextInput style={styles.budget} underlineColorAndroid="transparent" keyboardType='numeric' value={this.state.budget}  onChangeText={ (value) => this.setState({budget:value})}/>
-              {/* <Text style={styles.budget}>${this.state.budget}</Text> */}
             </View>
 
             <View>
