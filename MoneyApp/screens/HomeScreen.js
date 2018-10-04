@@ -8,48 +8,100 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  AsyncStorage,
 } from 'react-native';
+
+import Profile from '../components/Profile';
 
 export default class HomeScreen extends React.Component {
   constructor(props){
     super(props);
-
     this.state = {
+      profile: {},
       input: "",
-      budget: "300",
+      budget: null,
       bill: "0",
       tip: "0.00",
-      test: true,
+      total: "0.00",
+      tax: "0.13",
+    };
+  }
+
+  //Get stored data if available else create new profile.
+  componentDidMount(){
+    let that = this;
+    let p = new Profile(0);
+    this.getProfile().then((value) => {
+      let p2;
+      if (value !== null){
+        p2 = JSON.parse(value);
+        that.setState({
+          profile: p2,
+          budget: p2['balance'].toString(),
+        });
+      }else{
+        that.setState({
+          profile: p,
+          budget: p['balance'].toString(),
+        });
+        that.storeProfile(p);
+      };
+    });
+
+  };
+
+  storeProfile = async (profile) => {
+    try {
+      await AsyncStorage.setItem('Profile', JSON.stringify(profile));
+    } catch (error) {
+      // Error saving data
     }
   }
+  getProfile = async () =>{
+    let profile;
+    try{
+      let res = await AsyncStorage.getItem('Profile');
+      // profile = JSON.parse(res);
+      return res;
+    }catch(error){
+      console.log(error.message);
+    }
+  }
+
+  
   static navigationOptions = {
     header: null,
   };
-
-  sum = (a,b) => {
-    return a + b;
-  }
   
-
   setBudget = (value) =>{
     this.setState({
       input: value,
     })
   };
+
   onPressBudget = () => {
     this.setState({
       budget: this.state.input,
     })
   };
+
   onPressPay = () =>{
     let tax = 0.13;
     let deduct = Number(this.state.tip) + Number(this.state.bill);
     let bal = Number(this.state.budget) - deduct;
     if(bal > 0){
       this.setState({
-        budget: bal.toString()
+        budget: bal.toString(),
       });
     };
+  };
+
+  onPressTip = (perc) =>{
+    let tip = (Number(perc) * Number(this.state.bill)).toFixed(2);
+    this.setState({
+      tip: tip,
+      total: Number(this.state.bill) + Number(tip), 
+    })
   }
 
   render() {
@@ -70,23 +122,28 @@ export default class HomeScreen extends React.Component {
 
               <Text>Add Tip Percentage</Text>
               
-              <TouchableOpacity style={styles.button} onPress={ () => this.setState({tip: (this.state.bill * 0.10).toFixed(2)})}>
+              <TouchableOpacity style={styles.button} onPress={() => {this.onPressTip(0.10)}}>
                 <Text style={styles.tipText}>10%</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.button} onPress={ () => this.setState({tip: (this.state.bill * 0.12).toFixed(2)})}>
+              <TouchableOpacity style={styles.button} onPress={ () => {this.onPressTip(0.12)}}>
                 <Text style={styles.tipText}>12%</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.button} onPress={ () => this.setState({tip: (this.state.bill * 0.15).toFixed(2)})}>
+              <TouchableOpacity style={styles.button} onPress={ () => {this.onPressTip(0.15)}}>
                 <Text style={styles.tipText}>15%</Text>
               </TouchableOpacity>
 
               <Text style={styles.calculatorTitle}>Tip: ${this.state.tip}</Text>
+              <Text style={styles.calculatorTitle}>Total: ${this.state.total}</Text>
 
               <TouchableOpacity style={styles.payButton} onPress={this.onPressPay}>
                 <Text style={styles.tipText}>Pay</Text>
               </TouchableOpacity>
+
+              {/* <TouchableOpacity style={styles.payButton} onPress={this.connectDB()}>
+                <Text style={styles.tipText}>Connect to Database</Text>
+              </TouchableOpacity> */}
             </View>
 
           </View>
