@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import Profile from '../components/Profile';
+import Transaction from '../components/Transaction';
 
 export default class HomeScreen extends React.Component {
   constructor(props){
@@ -91,12 +92,13 @@ export default class HomeScreen extends React.Component {
     let tax = 0.13;
     let deduct = Number(this.state.tip) + Number(this.state.bill);
     let bal = Number(this.state.budget) - deduct;
+    let tra = new Transaction(this.state.bill, this.state.tip. deduct);
     if(bal > 0){
       this.setState({
         budget: bal.toString(),
       });
-
       this.state.profile.deductBalance(deduct);
+      this.state.profile.addTransaction(tra);
       this.storeProfile(this.state.profile);
     };
   };
