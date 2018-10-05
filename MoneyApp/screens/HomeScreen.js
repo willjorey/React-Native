@@ -18,7 +18,6 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       profile: {},
-      input: "",
       budget: null,
       bill: "0",
       tip: "0.00",
@@ -35,9 +34,11 @@ export default class HomeScreen extends React.Component {
       let p2;
       if (value !== null){
         p2 = JSON.parse(value);
+        p.setBalance(p2['balance']);
+        p.setTransactions(p2['transactions']);
         that.setState({
-          profile: p2,
-          budget: p2['balance'].toString(),
+          profile: p,
+          budget: p['balance'].toString(),
         });
       }else{
         that.setState({
@@ -47,12 +48,12 @@ export default class HomeScreen extends React.Component {
         that.storeProfile(p);
       };
     });
-
   };
+
 
   storeProfile = async (profile) => {
     try {
-      await AsyncStorage.setItem('Profile', JSON.stringify(profile));
+      return await AsyncStorage.setItem('Profile', JSON.stringify(profile));
     } catch (error) {
       // Error saving data
     }
@@ -61,7 +62,6 @@ export default class HomeScreen extends React.Component {
     let profile;
     try{
       let res = await AsyncStorage.getItem('Profile');
-      // profile = JSON.parse(res);
       return res;
     }catch(error){
       console.log(error.message);
@@ -75,8 +75,10 @@ export default class HomeScreen extends React.Component {
   
   setBudget = (value) =>{
     this.setState({
-      input: value,
-    })
+      budget: value,
+    });
+    this.state.profile.setBalance(value);
+    this.storeProfile(this.state.profile);
   };
 
   onPressBudget = () => {
@@ -93,6 +95,9 @@ export default class HomeScreen extends React.Component {
       this.setState({
         budget: bal.toString(),
       });
+
+      this.state.profile.deductBalance(deduct);
+      this.storeProfile(this.state.profile);
     };
   };
 
@@ -113,7 +118,7 @@ export default class HomeScreen extends React.Component {
             
             <View style={styles.welcomeContainer}> 
               <Text style={styles.budget}>$</Text>
-              <TextInput style={styles.budget} underlineColorAndroid="transparent" keyboardType='numeric' value={this.state.budget}  onChangeText={ (value) => this.setState({budget:value})}/>
+              <TextInput style={styles.budget} underlineColorAndroid="transparent" keyboardType='numeric' value={this.state.budget}  onChangeText={ (value) => {this.setBudget(value)}}/>
             </View>
 
             <View>
@@ -141,9 +146,6 @@ export default class HomeScreen extends React.Component {
                 <Text style={styles.tipText}>Pay</Text>
               </TouchableOpacity>
 
-              {/* <TouchableOpacity style={styles.payButton} onPress={this.connectDB()}>
-                <Text style={styles.tipText}>Connect to Database</Text>
-              </TouchableOpacity> */}
             </View>
 
           </View>
