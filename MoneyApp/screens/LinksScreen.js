@@ -1,18 +1,45 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
+import { ScrollView, StyleSheet, Text} from 'react-native';
+import Profile from '../components/Profile';
+
+import Async from '../components/Async';
 
 export default class LinksScreen extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      profile: {},
+      budget: '',
+      transactions: [],
+    }
+    this.async = new Async();
+  }
   static navigationOptions = {
-    title: 'Links',
+    title: 'Your Recent Transactions',
+  };
+
+  componentDidMount(){
+    let that = this;
+    let p = new Profile(0);
+    this.async.getProfile().then((value) => {
+    let p2;
+      p2 = JSON.parse(value);
+      p.setBalance(p2['balance']);
+      p.setTransactions(p2['transactions']);
+      that.setState({
+        profile: p,
+        budget: p['balance'].toString(),
+        transactions: [...p.getTransactions()],
+      });
+    });
   };
 
   render() {
     return (
       <ScrollView style={styles.container}>
-        {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links */}
-        <ExpoLinksView />
+        <Text style={styles.getStartedText}>Your Budget</Text>
+        <Text style={styles.budget}>${this.state.budget}</Text>
+
       </ScrollView>
     );
   }
@@ -23,5 +50,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff',
+  },
+  budget:{
+    fontSize: 75,
+    color: 'green',
   },
 });

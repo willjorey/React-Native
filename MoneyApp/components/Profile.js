@@ -27,4 +27,16 @@ export default class Profile{
         this.balance = Number(this.getBalance()) - Number(value);
     }
 
+    removeTransaction = (date) => {
+        let t = this.getTransactions()
+        for (var i = 0; i < t.length; i++){
+            if (t[i].date === date){
+                t.splice(i,1);
+            }
+        }
+    };
+    clearTransactions = () =>{
+        this.transactions = [];
+    }
+
 }

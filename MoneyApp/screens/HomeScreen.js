@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Image,
   Platform,
   ScrollView,
   StyleSheet,
@@ -8,15 +7,16 @@ import {
   TouchableOpacity,
   View,
   TextInput,
-  AsyncStorage,
 } from 'react-native';
 
+import Async from '../components/Async';
 import Profile from '../components/Profile';
 import Transaction from '../components/Transaction';
 
 export default class HomeScreen extends React.Component {
   constructor(props){
     super(props);
+    let date = new Date();
     this.state = {
       profile: {},
       budget: null,
@@ -24,14 +24,16 @@ export default class HomeScreen extends React.Component {
       tip: "0.00",
       total: "0.00",
       tax: "0.13",
+      date: date.toDateString(),
     };
+    this.async = new Async();
   }
 
   //Get stored data if available else create new profile.
   componentDidMount(){
     let that = this;
     let p = new Profile(0);
-    this.getProfile().then((value) => {
+    this.async.getProfile().then((value) => {
       let p2;
       if (value !== null){
         p2 = JSON.parse(value);
@@ -46,28 +48,10 @@ export default class HomeScreen extends React.Component {
           profile: p,
           budget: p['balance'].toString(),
         });
-        that.storeProfile(p);
+        this.async.storeProfile(p);
       };
     });
   };
-
-
-  storeProfile = async (profile) => {
-    try {
-      return await AsyncStorage.setItem('Profile', JSON.stringify(profile));
-    } catch (error) {
-      // Error saving data
-    }
-  }
-  getProfile = async () =>{
-    let profile;
-    try{
-      let res = await AsyncStorage.getItem('Profile');
-      return res;
-    }catch(error){
-      console.log(error.message);
-    }
-  }
 
   
   static navigationOptions = {
@@ -79,7 +63,7 @@ export default class HomeScreen extends React.Component {
       budget: value,
     });
     this.state.profile.setBalance(value);
-    this.storeProfile(this.state.profile);
+    this.async.storeProfile(this.state.profile);
   };
 
   onPressBudget = () => {
@@ -92,14 +76,14 @@ export default class HomeScreen extends React.Component {
     let tax = 0.13;
     let deduct = Number(this.state.tip) + Number(this.state.bill);
     let bal = Number(this.state.budget) - deduct;
-    let tra = new Transaction(this.state.bill, this.state.tip. deduct);
+    let tra = new Transaction(this.state.bill, this.state.tip, deduct, this.state.date);
     if(bal > 0){
       this.setState({
         budget: bal.toString(),
       });
       this.state.profile.deductBalance(deduct);
       this.state.profile.addTransaction(tra);
-      this.storeProfile(this.state.profile);
+      this.async.storeProfile(this.state.profile);
     };
   };
 
@@ -109,7 +93,7 @@ export default class HomeScreen extends React.Component {
       tip: tip,
       total: Number(this.state.bill) + Number(tip), 
     })
-  }
+  };
 
   render() {
     return (
