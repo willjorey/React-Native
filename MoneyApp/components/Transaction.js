@@ -5,5 +5,7 @@ export default class Transaction{
         this.total = total;
         this.date = date;
     };
-
+    toString = () => {
+        return this.price + " " + this.date
+    }
 }
