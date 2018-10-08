@@ -21,7 +21,8 @@ export default class FlatListBasics extends Component {
       <View style={styles.container}>
         <FlatList
           data={this.state.list}
-          renderItem={({item}) => <Text style={styles.item}>${item.price} {item.date}</Text>}
+          renderItem={({item} ) => <Text key={item.date} style={styles.item}>${item.total} {item.date}</Text>}
+          keyExtractor={(item, index) => index + item.date}
         />
       </View>
     );
