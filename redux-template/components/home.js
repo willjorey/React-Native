@@ -5,6 +5,7 @@ import {
     StyleSheet,
     View,
     Text,
+    TextInput,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
@@ -17,6 +18,8 @@ class Home extends Component {
         super(props);
 
         this.state = {
+            user: "Some Text",
+            pass: "Enter Password",
         };
     }
 
@@ -24,10 +27,29 @@ class Home extends Component {
         // this.props.getData(); //call our action
     }
 
+    setUsername = (value) =>{
+        this.setState({
+            user: value,
+        });
+    }
+    setPassword = (value) =>{
+        this.setState({
+            pass: value,
+        });
+    }
+
     render() {
         return (
-            <View>
-                <Text>Login</Text>
+            <View style={styles.container}>
+                <Text style={styles.title}>Login</Text>
+                <Text>Enter Username</Text>
+                <View style={styles.loginContainer}>
+                    <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
+                </View>
+                <View style={styles.loginContainer}>
+                    <TextInput underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
+                </View>
+
             </View>
         );
     }
@@ -57,26 +79,20 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 const styles = StyleSheet.create({
-    activityIndicatorContainer:{
-        backgroundColor: "#fff",
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
+    container: {
+      marginTop:30,
     },
-
-    row:{
-        borderBottomWidth: 1,
-        borderColor: "#ccc",
-        padding: 10
+    title: {
+      fontSize: 50,
+      fontWeight: 'bold',
     },
-
-    title:{
-        fontSize: 15,
-        fontWeight: "600"
+    activeTitle: {
+      color: 'red',
     },
-
-    description:{
-        marginTop: 5,
-        fontSize: 14,
+    loginContainer:{
+        width:200,
+        borderRadius: 4,
+        borderWidth: 3,
+        borderColor: '#d6d7da',
     }
-});
+  });
