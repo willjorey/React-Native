@@ -1,5 +1,5 @@
 export const DATA_AVAILABLE = 'DATA_AVAILABLE';
-export const CHECK_PASSWORD = 'CHECK_PASSWORD';
+export const GET_LOGIN = 'GET_LOGIN';
 
 //Import the sample data
 import Data from '../instructions.json';
@@ -22,6 +22,6 @@ export function getLogin(){
     return (dispatch) => {
         let user = 'username';
         let pass = 'password'
-        dispatch({type: CHECK_PASSWORD, username: user, password: pass});
+        dispatch({type: GET_LOGIN, username: user, password: pass});
     }
 }

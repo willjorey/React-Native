@@ -6,6 +6,7 @@ import {
     View,
     Text,
     TextInput,
+    TouchableOpacity,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
@@ -25,17 +26,22 @@ class Home extends Component {
 
     componentDidMount() {
         // this.props.getData(); //call our action
-    }
+    };
 
     setUsername = (value) =>{
         this.setState({
             user: value,
         });
-    }
+    };
     setPassword = (value) =>{
         this.setState({
             pass: value,
         });
+
+    };
+
+    onPressButton = () => {
+        this.props.getLogin();
     }
 
     render() {
@@ -50,6 +56,10 @@ class Home extends Component {
                     <TextInput underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
                 </View>
 
+                <TouchableOpacity style={styles.payButton} onPress={this.onPressButton()}>
+                    <Text style={styles.tipText}>Press Me</Text>
+                </TouchableOpacity>
+
             </View>
         );
     }
@@ -63,8 +73,8 @@ class Home extends Component {
 // This function makes Redux know that this component needs to be passed a piece of the state
 function mapStateToProps(state, props) {
     return {
-        loading: state.dataReducer.loading,
-        data: state.dataReducer.data
+        username: state.loginReducer.username,
+        password: state.loginReducer.password,
     }
 }
 
@@ -94,5 +104,15 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 3,
         borderColor: '#d6d7da',
-    }
+    },
+    tipText:{
+        fontSize:25,
+        color: 'white',
+      },
+      payButton:{
+        alignItems: 'center',
+        backgroundColor: '#FF3838',
+        padding: 10,
+        height: 55,
+      },
   });
