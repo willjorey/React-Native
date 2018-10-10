@@ -6,7 +6,7 @@ import {
     View,
     Text,
     TextInput,
-    TouchableOpacity,
+    Button,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
@@ -41,7 +41,9 @@ class Home extends Component {
     };
 
     onPressButton = () => {
+        console.log(this.props);
         this.props.getLogin();
+        this.props.checkLogin();
     }
 
     render() {
@@ -56,10 +58,7 @@ class Home extends Component {
                     <TextInput underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
                 </View>
 
-                <TouchableOpacity style={styles.payButton} onPress={this.onPressButton()}>
-                    <Text style={styles.tipText}>Press Me</Text>
-                </TouchableOpacity>
-
+                <Button style={styles.payButton} onPress={() => {this.onPressButton()}} title='Login'/>
             </View>
         );
     }
@@ -75,6 +74,7 @@ function mapStateToProps(state, props) {
     return {
         username: state.loginReducer.username,
         password: state.loginReducer.password,
+        login: state.loginReducer.login,
     }
 }
 
