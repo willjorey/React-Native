@@ -12,16 +12,19 @@ import {
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
+import Profile from './Profile';
 import * as Actions from '../actions'; //Import your actions
+import Async from './Async';
 
 class Home extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: "Some Text",
-            pass: "Enter Password",
+            user: "",
+            pass: "",
         };
+        this.async = new Async();
     }
 
     componentDidMount() {
@@ -40,11 +43,26 @@ class Home extends Component {
 
     };
 
-    onPressButton = () => {
-        console.log(this.props);
-        this.props.getLogin();
-        this.props.checkLogin();
+    validateLogin = (key) =>{
+        let that = this;
+        this.async.getLogin(key).then( (value) => {
+            if (value !== null){
+                that.props.checkLogin();
+                that.props.setLogin(that.state.user,that.state.pass);
+                console.log(that.props);
+            }else{
+                console.log("Incorrect Login");
+            }
+        });
     }
+    onPressButton = () => {
+        this.validateLogin(this.state.user + this.state.pass);
+    }
+
+    createLogin = () => {
+        let p = new Profile(this.state.user, this.state.pass);
+        this.async.storeLogin(p);
+    };
 
     render() {
         return (
@@ -59,6 +77,8 @@ class Home extends Component {
                 </View>
 
                 <Button onPress={() => {this.onPressButton()}} title='Login'/>
+                <Button onPress={() => {this.createLogin()}} title='Create new Account'/>
+
             </View>
         );
     }

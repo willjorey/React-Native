@@ -24,10 +24,16 @@ export function getLogin(){
         let pass = 'password';
         dispatch({type: GET_LOGIN, username: user, password: pass});
     };
-}
+};
 
 export function checkLogin(){
     return (dispatch) => {
         dispatch({type: CHECK_LOGIN});
+    };
+};
+
+export function setLogin(user, pass){
+    return (dispatch) => {
+        dispatch({type: GET_LOGIN, username: user, password: pass});
     };
 }

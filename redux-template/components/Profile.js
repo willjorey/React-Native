@@ -4,18 +4,18 @@ export default class Profile{
         this.password = password;
     }
 
-    getusername = () => {
+    getUsername = () => {
         return this.username;
     }
-    getpassword = () => {
+    getPassword = () => {
         return this.password;
     }
 
-    setusername = (value) => {
+    setUsername = (value) => {
         this.username = value;
     }
 
-    setpassword = (array) => {
+    setPassword = (array) => {
         this.password = array;
     }
 

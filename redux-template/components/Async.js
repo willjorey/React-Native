@@ -12,9 +12,9 @@ export default class Async{
           // Error saving data
         }
     };
-    getProfile = async () =>{
+    getLogin = async (key) =>{
         try{
-            let res = await AsyncStorage.getItem('Profile');
+            let res = await AsyncStorage.getItem(key);
             return res;
         }catch(error){
             console.log(error.message);
