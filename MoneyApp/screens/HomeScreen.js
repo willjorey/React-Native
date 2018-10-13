@@ -113,6 +113,10 @@ export default class HomeScreen extends React.Component {
 
               <Text>Add Tip Percentage</Text>
               
+              <TouchableOpacity style={styles.button} onPress={() => {this.onPressTip(0)}}>
+                <Text style={styles.tipText}>No tip</Text>
+              </TouchableOpacity>
+
               <TouchableOpacity style={styles.button} onPress={() => {this.onPressTip(0.10)}}>
                 <Text style={styles.tipText}>10%</Text>
               </TouchableOpacity>
