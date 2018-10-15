@@ -5,6 +5,7 @@ import {
     StyleSheet,
     View,
     Text,
+    AsyncStorage,
     TextInput,
     Button,
 } from 'react-native';
@@ -12,24 +13,20 @@ import {
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
-import Profile from './Profile';
 import * as Actions from '../actions'; //Import your actions
-import Async from './Async';
+import Async from '../components/Async';
+import Profile from '../components/Profile';
 
-class Home extends Component {
+class CreateLoginScreen extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: "",
-            pass: "",
+            user: "Some Text",
+            pass: "Enter Password",
         };
         this.async = new Async();
     }
-
-    componentDidMount() {
-        // this.props.getData(); //call our action
-    };
 
     setUsername = (value) =>{
         this.setState({
@@ -42,48 +39,27 @@ class Home extends Component {
         });
 
     };
-
-    validateLogin = (key) =>{
-        let that = this;
-        //Check if the login exists: If so change state of loginReducer
-        this.async.getLogin(key).then( (value) => {
-            if (value !== null){
-                that.props.Login();
-                that.props.setLogin(that.state.user,that.state.pass);
-                console.log(that.props);
-            }else{
-                console.log("Incorrect Login");
-            }
-        });
-    }
-    onPressButton = () => {
-        this.validateLogin(this.state.user + this.state.pass);
-    }
-
     createLogin = () => {
         let p = new Profile(this.state.user, this.state.pass);
         this.async.storeLogin(p);
+        console.log(p);
     };
 
-    logout = () => {
-        this.props.logout();
-        console.log(this.props);
-    }
-
     render() {
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
+                <Text style={styles.title}>Create New Login</Text>
                 <Text>Enter Username</Text>
                 <View style={styles.loginContainer}>
                     <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
                 </View>
+                <Text>Enter Password</Text>
                 <View style={styles.loginContainer}>
                     <TextInput underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
                 </View>
 
-                <Button onPress={() => {this.onPressButton()}} title='Login'/>
-                <Button onPress={() => {this.createLogin()}} title='Create new Account'/>
-                <Button onPress={() => {this.logout()}} title='Logout'/>
+                <Button onPress={() => {this.createLogin()}} title='Create New Login'/>
 
             </View>
         );
@@ -112,7 +88,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 //Connect everything
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateLoginScreen);
 
 const styles = StyleSheet.create({
     container: {

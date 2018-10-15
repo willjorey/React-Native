@@ -1,6 +1,7 @@
 export const DATA_AVAILABLE = 'DATA_AVAILABLE';
-export const GET_LOGIN = 'GET_LOGIN';
-export const CHECK_LOGIN = 'CHECK_LOGIN';
+export const SET_LOGIN = 'SET_LOGIN';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 //Import the sample data
 // import Data from '../instructions.json';
  
@@ -22,18 +23,24 @@ export function getLogin(){
     return (dispatch) => {
         let user = 'username';
         let pass = 'password';
-        dispatch({type: GET_LOGIN, username: user, password: pass});
+        dispatch({type: SET_LOGIN, username: user, password: pass});
     };
 };
 
-export function checkLogin(){
+export function Login(){
     return (dispatch) => {
-        dispatch({type: CHECK_LOGIN});
+        dispatch({type: LOGIN});
     };
 };
 
 export function setLogin(user, pass){
     return (dispatch) => {
-        dispatch({type: GET_LOGIN, username: user, password: pass});
+        dispatch({type: SET_LOGIN, username: user, password: pass});
     };
+};
+
+export function logout(){
+    return (dispatch) => {
+        dispatch({type: LOGOUT})
+    }
 }
