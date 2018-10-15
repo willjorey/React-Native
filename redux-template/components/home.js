@@ -83,7 +83,7 @@ class Home extends Component {
                 </View>
                 <Text>Password</Text>
                 <View style={styles.loginContainer}>
-                    <TextInput underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
+                    <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
                 </View>
 
                 <Button onPress={() => {this.onPressButton()}} title='Login'/>

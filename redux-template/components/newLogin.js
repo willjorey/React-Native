@@ -61,7 +61,7 @@ class newLogin extends Component {
                 </View>
                 <Text>Enter Password</Text>
                 <View style={styles.loginContainer}>
-                    <TextInput underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
+                    <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
                 </View>
 
                 <Button onPress={() => {this.createLogin()}} title='Create'/>
