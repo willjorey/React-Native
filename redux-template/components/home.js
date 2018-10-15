@@ -82,7 +82,6 @@ class Home extends Component {
                 </View>
 
                 <Button onPress={() => {this.onPressButton()}} title='Login'/>
-                <Button onPress={() => {this.createLogin()}} title='Create new Account'/>
                 <Button onPress={() => {this.logout()}} title='Logout'/>
 
             </View>

@@ -5,27 +5,28 @@ import {
     StyleSheet,
     View,
     Text,
-    AsyncStorage,
+    TextInput,
+    Button,
+    ToastAndroid,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
-import Async from './Async';
-import Profile from './Profile';
+import Async from '../components/Async';
+import Profile from '../components/Profile';
 
 class newLogin extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: "Some Text",
-            pass: "Enter Password",
+            user: "",
+            pass: "",
         };
         this.async = new Async();
     }
-
     setUsername = (value) =>{
         this.setState({
             user: value,
@@ -41,12 +42,17 @@ class newLogin extends Component {
         let p = new Profile(this.state.user, this.state.pass);
         this.async.storeLogin(p);
         console.log(p);
-    };
+        ToastAndroid.showWithGravityAndOffset(
+            'Login Created',
+            ToastAndroid.LONG,
+            ToastAndroid.CENTER,
+            25,
+            50
+          );    };
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Create New Login</Text>
                 <Text>Enter Username</Text>
                 <View style={styles.loginContainer}>
                     <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
@@ -56,7 +62,7 @@ class newLogin extends Component {
                     <TextInput underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
                 </View>
 
-                <Button onPress={() => {this.createLogin()}} title='Create New Login'/>
+                <Button onPress={() => {this.createLogin()}} title='Create'/>
 
             </View>
         );

@@ -14,11 +14,8 @@ class LoginScreen extends React.Component {
       <View >
         <Home/>
         <Button
-        title="New Login"
-        onPress={() =>
-          navigate('CreateLogin')
-        }
-      />
+        title="Create New Login"
+        onPress={() => navigate('CreateLogin') }/>
       </View>
     );
   }
