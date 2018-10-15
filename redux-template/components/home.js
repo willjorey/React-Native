@@ -7,6 +7,7 @@ import {
     Text,
     TextInput,
     Button,
+    ToastAndroid,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
@@ -50,14 +51,22 @@ class Home extends Component {
             if (value !== null){
                 that.props.Login();
                 that.props.setLogin(that.state.user,that.state.pass);
-                console.log(that.props);
+                that.props.navigation.navigate('Blank');
             }else{
+                ToastAndroid.showWithGravityAndOffset(
+                    'Incorrect Login',
+                    ToastAndroid.LONG,
+                    ToastAndroid.CENTER,
+                    25,
+                    50
+                  );
                 console.log("Incorrect Login");
             }
         });
     }
     onPressButton = () => {
         this.validateLogin(this.state.user + this.state.pass);
+
     }
 
     createLogin = () => {
@@ -65,24 +74,19 @@ class Home extends Component {
         this.async.storeLogin(p);
     };
 
-    logout = () => {
-        this.props.logout();
-        console.log(this.props);
-    }
-
     render() {
         return (
             <View style={styles.container}>
-                <Text>Enter Username</Text>
+                <Text>Username</Text>
                 <View style={styles.loginContainer}>
                     <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
                 </View>
+                <Text>Password</Text>
                 <View style={styles.loginContainer}>
                     <TextInput underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
                 </View>
 
                 <Button onPress={() => {this.onPressButton()}} title='Login'/>
-                <Button onPress={() => {this.logout()}} title='Logout'/>
 
             </View>
         );

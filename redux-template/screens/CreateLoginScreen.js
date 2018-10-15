@@ -2,10 +2,10 @@
 
 import React, { Component } from 'react';
 import {View,} from 'react-native';
-
+import { createStackNavigator } from 'react-navigation';
 import NewLogin from '../components/newLogin';
 
-export default class CreateLoginScreen extends Component {
+class CreateLoginScreen extends Component {
 
     static navigationOptions = {
         title: 'Create New Login',
@@ -14,9 +14,15 @@ export default class CreateLoginScreen extends Component {
     render() {
         return (
             <View>
-                <NewLogin nav = {this.props.navigation}/>
+                <NewLogin navigation = {this.props.navigation}/>
             </View>
         );
     }
 
 };
+
+export default createStackNavigator({
+    CreateLogin: {
+      screen: CreateLoginScreen
+    },
+  });

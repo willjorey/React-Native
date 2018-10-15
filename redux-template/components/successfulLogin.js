@@ -14,58 +14,28 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
-import Async from '../components/Async';
-import Profile from '../components/Profile';
 
-class newLogin extends Component {
+class successfulLogin extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            user: "",
-            pass: "",
-        };
-        this.async = new Async();
     }
-    setUsername = (value) =>{
-        this.setState({
-            user: value,
-        });
-    };
-    setPassword = (value) =>{
-        this.setState({
-            pass: value,
-        });
 
-    };
-    createLogin = () => {
-        let p = new Profile(this.state.user, this.state.pass);
-        this.async.storeLogin(p);
-        console.log(p);
+    logout = () => {
+        this.props.logout();
         ToastAndroid.showWithGravityAndOffset(
-            'Login Created',
+            'Successfully Logged Out',
             ToastAndroid.LONG,
             ToastAndroid.CENTER,
             25,
             50
           );
-          this.props.navigation.navigate('Login');    
+          this.props.navigation.navigate('Login');
     };
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Enter Username</Text>
-                <View style={styles.loginContainer}>
-                    <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
-                </View>
-                <Text>Enter Password</Text>
-                <View style={styles.loginContainer}>
-                    <TextInput underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
-                </View>
-
-                <Button onPress={() => {this.createLogin()}} title='Create'/>
-
+            <View>
+                <Button title="Logout" onPress={() => {this.logout()}}/>
             </View>
         );
     }
@@ -87,13 +57,13 @@ function mapStateToProps(state, props) {
 
 // Doing this merges our actions into the component’s props,
 // while wrapping them in dispatch() so that they immediately dispatch an Action.
-// Just by doing this, we will have access to the actions defined in out actions file (action/home.js)
+// Just by doing this, we will have access to the actions defined in out actions file (action/successfulLogin.js)
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(Actions, dispatch);
 }
 
 //Connect everything
-export default connect(mapStateToProps, mapDispatchToProps)(newLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(successfulLogin);
 
 const styles = StyleSheet.create({
     container: {
