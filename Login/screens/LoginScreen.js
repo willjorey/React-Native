@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import Home from '../components/home';
-import CreateLoginScreen from './CreateLoginScreen';
 import BlankScreen from './BlankScreen';
 
 class LoginScreen extends React.Component {
@@ -10,9 +9,8 @@ class LoginScreen extends React.Component {
     header: null,
   };
   render() {
-    const { navigate } = this.props.navigation;
     return (
-      <View style={{backgroundColor: 'white', flex:1}}>
+      <View style={{backgroundColor: 'white', flex:1, opacity: 0.8}}>
         <Home navigation={this.props.navigation}/>
       </View>
     );
@@ -22,9 +20,6 @@ class LoginScreen extends React.Component {
 export default createStackNavigator({
   Login: {
     screen: LoginScreen
-  },
-  CreateLogin: {
-    screen: CreateLoginScreen
   },
   Blank: {
     screen: BlankScreen

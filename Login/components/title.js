@@ -5,9 +5,6 @@ import {
     StyleSheet,
     View,
     Text,
-    TextInput,
-    Button,
-    ToastAndroid,
     TouchableOpacity,
 } from 'react-native';
 
@@ -15,11 +12,11 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
-import Async from './Async';
 
 class Title extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props)
     }
 
     componentDidMount() {
@@ -30,14 +27,14 @@ class Title extends Component {
         return (
             <View style={styles.container}>
                 <View style={{padding: 5,}}>
-                    <TouchableOpacity style={styles.signupButton}>
-                        <Text>Sign Up</Text>
+                    <TouchableOpacity style={styles.signupButton} onPress={() => {this.props.navigation.navigate('CreateLogin')}}>
+                        <Text style={styles.signupText}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
 
                 <View style={{padding: 5,}}>
-                    <TouchableOpacity style={styles.loginButton}>
-                        <Text>Login</Text>
+                    <TouchableOpacity style={styles.loginButton} onPress={() => {this.props.navigation.navigate('Login')}}>
+                        <Text style={styles.loginText}>Login</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -75,22 +72,35 @@ const styles = StyleSheet.create({
       marginTop:30,
       alignItems:'center',
     },
+    signupText:{
+        color: 'white',
+        fontSize: 20,
+    },
+    loginText:{
+        color: '#1E90FF',
+        fontSize: 20,
+    },
     signupButton:{
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#1E90FF',
         height: 55,
-        width:100,
-        borderRadius: 5,
-
+        width:200,
+        borderRadius: 50,
+        borderWidth: 2,
+        borderColor: 'white',
+        top:450,
     },
     loginButton:{
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#1E90FF',
+        backgroundColor: 'white',
         height: 55,
-        width:100,
-        borderRadius: 5,
+        width:200,
+        borderRadius: 50,
+        borderWidth: 2,
+        borderColor: '#1E90FF',
+        top:450,
     }
 
   });

@@ -56,8 +56,8 @@ class Home extends Component {
             }else{
                 ToastAndroid.showWithGravityAndOffset(
                     'Incorrect Login',
-                    ToastAndroid.LONG,
-                    ToastAndroid.CENTER,
+                    ToastAndroid.SHORT,
+                    ToastAndroid.BOTTOM,
                     25,
                     50
                   );
@@ -70,33 +70,27 @@ class Home extends Component {
 
     }
 
-    createLogin = () => {
-        let p = new Profile(this.state.user, this.state.pass);
-        this.async.storeLogin(p);
-    };
-
     render() {
         return (
             <View style={styles.container}>
 
                 <View style={styles.loginContainer}>
-                    <Text style={styles.text}>Username</Text>
-                    <View style={styles.login}>
-                        <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
+                    <View style={{padding:10}}>
+                        <Text style={styles.text}>Username</Text>
+                        <View style={styles.login}>
+                            <TextInput style={styles.input} underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
+                        </View>
                     </View>
-                    <Text style={styles.text}>Password</Text>
-                    <View style={styles.login}>
-                        <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
+
+                    <View style={{padding:10}}>
+                        <Text style={styles.text}>Password</Text>
+                        <View style={styles.login}>
+                            <TextInput style={styles.input} secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
+                        </View>
                     </View>
                 </View>
  
                 <View style={styles.buttonContainer}>
-                    <View style={{padding: 5,}}>
-                        <TouchableOpacity style={styles.createLoginButton} onPress={() => {this.props.navigation.navigate('CreateLogin')}}>
-                            <Text style={styles.buttonText}>Create New Login</Text>
-                        </TouchableOpacity>
-                    </View>
-
                     <View style={{padding: 5,}}>
                         <TouchableOpacity style={styles.loginButton} onPress={() => {this.onPressButton()}}>
                             <Text style={styles.buttonText}>Login</Text>
@@ -149,18 +143,19 @@ const styles = StyleSheet.create({
     loginContainer:{
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 5,
+        padding: 10,
         width:400,
         height:200,
+        top:100,
     },
     login:{
         width:300,
-        borderRadius: 4,
-        borderWidth: 3,
-        borderColor: '#d6d7da',
+        borderColor: '#1E90FF',
+        borderBottomWidth:1,
     },
     text:{
-        fontSize:25,
+        fontSize:15,
+        color:'#1E90FF',
       },
     createLoginButton:{
         justifyContent: 'center',
@@ -173,18 +168,19 @@ const styles = StyleSheet.create({
     loginButton:{
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#1E90FF',
+        backgroundColor: 'white',
         height: 55,
-        width:100,
-        borderRadius: 5,
+        width:200,
+        borderRadius: 50,
+        borderWidth: 2,
+        borderColor: '#1E90FF',
+        top:150,
     },
     buttonText: {
-        color: "white",
+        color: "#1E90FF",
         fontSize: 20,
     },
-    buttonContainer: {
-        flexWrap: 'wrap', 
-        alignItems: 'flex-start',
-        flexDirection:'row',
-    }
+    input:{
+        fontSize:20,
+    },
   });

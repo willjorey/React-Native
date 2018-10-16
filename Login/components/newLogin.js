@@ -24,6 +24,7 @@ class newLogin extends Component {
         this.state = {
             user: "",
             pass: "",
+            re_pass: "",
         };
         this.async = new Async();
     }
@@ -39,30 +40,53 @@ class newLogin extends Component {
 
     };
     createLogin = () => {
-        let p = new Profile(this.state.user, this.state.pass);
-        this.async.storeLogin(p);
-        console.log(p);
-        ToastAndroid.showWithGravityAndOffset(
-            'Login Created',
-            ToastAndroid.LONG,
-            ToastAndroid.CENTER,
-            25,
-            50
-          );
-          this.props.navigation.navigate('Login');    
+        if(this.state.pass === this.state.re_pass){
+            let p = new Profile(this.state.user, this.state.pass);
+            this.async.storeLogin(p);
+            console.log(p);
+            ToastAndroid.showWithGravityAndOffset(
+                'Login Created',
+                ToastAndroid.LONG,
+                ToastAndroid.CENTER,
+                25,
+                50
+              );
+              this.props.navigation.navigate('Login'); 
+        }else{
+            ToastAndroid.showWithGravityAndOffset(
+                'Passwords Do not Match',
+                ToastAndroid.LONG,
+                ToastAndroid.TOP,
+                25,
+                50
+              );
+        }
     };
 
     render() {
         return (
             <View style={styles.container}>
-                <Text>Enter Username</Text>
-                <View style={styles.loginContainer}>
-                    <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
+                <View style={{padding:10}}>
+                    <Text style={{color: '#1E90FF'}}>Enter Username</Text>
+                    <View style={styles.loginContainer}>
+                        <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
+                    </View>
                 </View>
-                <Text>Enter Password</Text>
-                <View style={styles.loginContainer}>
-                    <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
+
+                <View style={{padding:10}}>
+                    <Text style={{color: '#1E90FF'}}> Password</Text>
+                    <View style={styles.loginContainer}>
+                        <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
+                    </View>
                 </View>
+
+                <View style={{padding:10}}>
+                    <Text style={{color: '#1E90FF'}}> Re-Type Password</Text>
+                    <View style={styles.loginContainer}>
+                        <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.re_pass} onChangeText={(value) => {this.setState({re_pass: value})}}/>
+                    </View>
+                </View>
+
 
                 <Button onPress={() => {this.createLogin()}} title='Create'/>
 
@@ -97,7 +121,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(newLogin);
 
 const styles = StyleSheet.create({
     container: {
-      marginTop:30,
+        alignItems: 'center',
+        marginTop:30,
     },
     title: {
       fontSize: 50,
@@ -107,10 +132,9 @@ const styles = StyleSheet.create({
       color: 'red',
     },
     loginContainer:{
-        width:200,
-        borderRadius: 4,
-        borderWidth: 3,
-        borderColor: '#d6d7da',
+        width:300,
+        borderBottomWidth: 1,
+        borderColor: '#1E90FF',
     },
     tipText:{
         fontSize:25,
