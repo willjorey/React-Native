@@ -92,7 +92,7 @@ class Home extends Component {
  
                 <View style={styles.buttonContainer}>
                     <View style={{padding: 5,}}>
-                        <TouchableOpacity style={styles.createLoginButton} onPress={() => {that.props.navigation.navigate('CreateLogin')}}>
+                        <TouchableOpacity style={styles.createLoginButton} onPress={() => {this.props.navigation.navigate('CreateLogin')}}>
                             <Text style={styles.buttonText}>Create New Login</Text>
                         </TouchableOpacity>
                     </View>

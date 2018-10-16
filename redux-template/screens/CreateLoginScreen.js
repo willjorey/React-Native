@@ -8,12 +8,12 @@ import NewLogin from '../components/newLogin';
 class CreateLoginScreen extends Component {
 
     static navigationOptions = {
-        title: 'Create New Login',
+        header: null,
       };
 
     render() {
         return (
-            <View>
+            <View style={{backgroundColor: 'white', flex:1}}>
                 <NewLogin navigation = {this.props.navigation}/>
             </View>
         );
