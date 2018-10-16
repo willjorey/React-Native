@@ -9,12 +9,12 @@ import {
     Image,
     ToastAndroid,
     TouchableOpacity,
+    TouchableHighlight,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
-import Profile from './Profile';
 import * as Actions from '../actions'; //Import your actions
 import Async from './Async';
 
@@ -73,9 +73,9 @@ class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View>
-                    <Image source={require('../assets/logo.png')} style={{height:200, width: 200,}}/>
-                </View>
+                <TouchableHighlight underlayColor='transparent' onPress={()=> {this.props.navigation.navigate('Title')}}>
+                    <Image source={require('../assets/logo.png')} style={{height:200, width: 200,}} />
+                </TouchableHighlight>
                 <View style={styles.loginContainer}>
                     <View style={{padding:10}}>
                         <Text style={styles.text}>Username</Text>

@@ -29,7 +29,7 @@ class successfulLogin extends Component {
             25,
             50
           );
-          this.props.navigation.navigate('Login');
+          this.props.navigation.replace('Title');
     };
 
     render() {

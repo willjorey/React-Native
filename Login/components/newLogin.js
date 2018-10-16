@@ -54,7 +54,7 @@ class newLogin extends Component {
             if(this.state.pass === this.state.re_pass){
 
                 if(this.state.pass.length > 3){
-                    let p = new Profile(this.state.user, this.state.pass);
+                    let p = new Profile(this.state.name, this.state.email, this.state.user, this.state.pass);
                     this.async.storeLogin(p);
                     console.log(p);
                     ToastAndroid.showWithGravityAndOffset('Login Created',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
@@ -112,8 +112,6 @@ class newLogin extends Component {
                     </View>
                 </View>
 
-
-                {/* <Button onPress={() => {this.createLogin()}} title='Create'/> */}
 
                 <View style={{padding: 5,}}>
                     <TouchableOpacity style={styles.signupButton} onPress={() => {this.createLogin()}}>

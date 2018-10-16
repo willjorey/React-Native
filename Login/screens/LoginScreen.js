@@ -1,27 +1,16 @@
-import React from 'react';
-import { View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
-import Home from '../components/home';
-import BlankScreen from './BlankScreen';
+'use strict';
 
-class LoginScreen extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import Home from '../components/home';
+
+export default class LoginScreen extends Component {
+
   render() {
     return (
-      <View style={{backgroundColor: 'white', flex:1, opacity: 0.8}}>
+      <View style={{backgroundColor: 'white', flex:1}}>
         <Home navigation={this.props.navigation}/>
       </View>
     );
   }
 }
-
-export default createStackNavigator({
-  Login: {
-    screen: LoginScreen
-  },
-  Blank: {
-    screen: BlankScreen
-  }
-});

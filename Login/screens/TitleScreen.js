@@ -1,11 +1,8 @@
-import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
-import LoginScreen from './LoginScreen';
+import React, { Component } from 'react';
+import { View, } from 'react-native';
 import Title from '../components/title';
-import CreateLoginScreen from './CreateLoginScreen';
 
-class TitleScreen extends React.Component {
+export default class TitleScreen extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -17,15 +14,3 @@ class TitleScreen extends React.Component {
     );
   }
 }
-
-export default createStackNavigator({
-    Title: {
-        screen: TitleScreen,
-    },
-    Login: {
-        screen: LoginScreen
-    },
-    CreateLogin:{
-        screen: CreateLoginScreen
-    }
-});

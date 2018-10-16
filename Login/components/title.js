@@ -17,7 +17,6 @@ import * as Actions from '../actions'; //Import your actions
 class Title extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props)
     }
 
     componentDidMount() {
