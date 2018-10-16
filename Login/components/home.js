@@ -52,7 +52,7 @@ class Home extends Component {
             if (value !== null){
                 that.props.Login();
                 that.props.setLogin(that.state.user,that.state.pass);
-                that.props.navigation.navigate('Blank');
+                that.props.navigation.navigate('Main');
             }else{
                 ToastAndroid.showWithGravityAndOffset(
                     'Incorrect Login',
@@ -73,7 +73,7 @@ class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableHighlight underlayColor='transparent' onPress={()=> {this.props.navigation.navigate('Title')}}>
+                <TouchableHighlight style={{top:80}}underlayColor='transparent' onPress={()=> {this.props.navigation.navigate('Title')}}>
                     <Image source={require('../assets/logo.png')} style={{height:200, width: 200,}} />
                 </TouchableHighlight>
                 <View style={styles.loginContainer}>
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         padding: 10,
         width:400,
         height:200,
-        top:0,
+        top:100,
     },
     login:{
         width:300,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         borderWidth: 2,
         borderColor: '#1E90FF',
-        top:0,
+        top:100,
     },
     buttonText: {
         color: "#1E90FF",

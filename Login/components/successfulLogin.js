@@ -4,12 +4,15 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
-    Text,
-    TextInput,
     Button,
+    Text,
     ToastAndroid,
+    FlatList,
+    TouchableOpacity,
+    Image,
+    ScrollView,
 } from 'react-native';
-
+import Organization from '../components/Organization';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
@@ -18,6 +21,22 @@ import * as Actions from '../actions'; //Import your actions
 class successfulLogin extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            orgs: [],
+        };
+    }
+
+    componentDidMount = () => {
+        let test = []
+        let z = new Organization("MUMBA");
+        let x = new Organization("NBA");
+        test.push(z);
+        test.push(x);
+        test.push(z);
+        test.push(x);
+        this.setState({
+            orgs: test,
+        })
     }
 
     logout = () => {
@@ -34,9 +53,31 @@ class successfulLogin extends Component {
 
     render() {
         return (
-            <View>
-                <Button title="Logout" onPress={() => {this.logout()}}/>
-            </View>
+            <ScrollView>
+                <View style={styles.container}>
+                    <View>
+
+                        <FlatList
+                            data={this.state.orgs}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={({item}) =>
+                            <View style={{padding: 5}}> 
+                                <TouchableOpacity style={{backgroundColor: item.color, opacity:0.8, borderRadius: 50, alignItems: 'center'}}>
+                                    <View style={styles.orgItem}>
+                                        <Image source={require('../assets/logo.png')} style={{height:50, width: 50, right:70, top: 10}} />
+                                        <Text style={styles.text}>{item.name}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            }
+                        />
+                        
+                    </View>
+                    <TouchableOpacity style={styles.logoutButton} onPress={() => {this.logout()}}>
+                            <Text style={styles.logoutText}>Logout</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView> 
         );
     }
 
@@ -82,14 +123,32 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: '#d6d7da',
     },
-    tipText:{
-        fontSize:25,
-        color: 'white',
+    text:{
+        fontSize:50,
+        color: 'black',
       },
-      payButton:{
+    orgButton:{
         alignItems: 'center',
         backgroundColor: '#FF3838',
         padding: 10,
         height: 55,
-      },
+    },
+    orgItem:{
+        flexWrap: 'wrap', 
+        alignItems: 'flex-start',
+        flexDirection:'row',
+    },
+    logoutButton:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#1E90FF',
+        height: 55,
+        width:200,
+        borderRadius: 50,
+        borderWidth: 2,
+        borderColor: 'white',
+    },
+    logoutText:{
+        color: 'white'
+    }
   });

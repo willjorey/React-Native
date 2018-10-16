@@ -4,6 +4,7 @@ export default class Profile{
         this.email = email;
         this.username = username;
         this.password = password;
+        this.subscriptions = [];
     }
 
     getUsername = () => {
@@ -21,4 +22,11 @@ export default class Profile{
         this.password = array;
     }
 
+    getSubscriptions = () => {
+        return this.subscriptions;
+    }
+    addSubscription = (sub) =>{
+        this.getSubscriptions().push(sub);
+    }
+ 
 }
