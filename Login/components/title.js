@@ -6,6 +6,7 @@ import {
     View,
     Text,
     TouchableOpacity,
+    Image
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
@@ -26,6 +27,9 @@ class Title extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <View>
+                    <Image source={require('../assets/logo.png')} style={{height:200, width: 200, top:100}}/>
+                </View>
                 <View style={{padding: 5,}}>
                     <TouchableOpacity style={styles.signupButton} onPress={() => {this.props.navigation.navigate('CreateLogin')}}>
                         <Text style={styles.signupText}>Sign Up</Text>
@@ -89,7 +93,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         borderWidth: 2,
         borderColor: 'white',
-        top:450,
+        top:250,
     },
     loginButton:{
         justifyContent: 'center',
@@ -100,7 +104,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         borderWidth: 2,
         borderColor: '#1E90FF',
-        top:450,
+        top:250,
     }
 
   });

@@ -6,7 +6,7 @@ import {
     View,
     Text,
     TextInput,
-    Button,
+    Image,
     ToastAndroid,
     TouchableOpacity,
 } from 'react-native';
@@ -73,7 +73,9 @@ class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-
+                <View>
+                    <Image source={require('../assets/logo.png')} style={{height:200, width: 200,}}/>
+                </View>
                 <View style={styles.loginContainer}>
                     <View style={{padding:10}}>
                         <Text style={styles.text}>Username</Text>
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
         padding: 10,
         width:400,
         height:200,
-        top:100,
+        top:0,
     },
     login:{
         width:300,
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         borderWidth: 2,
         borderColor: '#1E90FF',
-        top:150,
+        top:0,
     },
     buttonText: {
         color: "#1E90FF",

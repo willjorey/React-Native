@@ -68,7 +68,7 @@ class newLogin extends Component {
             }else{
                 ToastAndroid.showWithGravityAndOffset('Passwords Do not Match',ToastAndroid.LONG,ToastAndroid.TOP,25,50);
             }
-            
+
         }else{
             ToastAndroid.showWithGravityAndOffset('A Field is Empty',ToastAndroid.LONG,ToastAndroid.TOP,25,50);
         };
@@ -79,34 +79,34 @@ class newLogin extends Component {
             <View style={styles.container}>
 
                 <View style={{padding:10}}>
-                    <Text style={{color: '#1E90FF'}}>Name</Text>
+                    <Text style={styles.textHeader}>Name</Text>
                     <View style={styles.loginContainer}>
                         <TextInput underlineColorAndroid="transparent" value={this.state.name} onChangeText={(value) => {this.setState({name: value})}}/>
                     </View>
                 </View>
 
                 <View style={{padding:10}}>
-                    <Text style={{color: '#1E90FF'}}>E-mail</Text>
+                    <Text style={styles.textHeader}>E-mail</Text>
                     <View style={styles.loginContainer}>
                         <TextInput underlineColorAndroid="transparent" value={this.state.email} onChangeText={(value) => {this.setState({email: value})}}/>
                     </View>
                 </View>
                 <View style={{padding:10}}>
-                    <Text style={{color: '#1E90FF'}}>Enter Username</Text>
+                    <Text style={styles.textHeader}>Enter Username</Text>
                     <View style={styles.loginContainer}>
                         <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
                     </View>
                 </View>
 
                 <View style={{padding:10}}>
-                    <Text style={{color: '#1E90FF'}}>Password</Text>
+                    <Text style={styles.textHeader}>Password</Text>
                     <View style={styles.loginContainer}>
                         <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
                     </View>
                 </View>
 
                 <View style={{padding:10}}>
-                    <Text style={{color: '#1E90FF'}}>Re-Type Password</Text>
+                    <Text style={styles.textHeader}>Re-Type Password</Text>
                     <View style={styles.loginContainer}>
                         <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.re_pass} onChangeText={(value) => {this.setState({re_pass: value})}}/>
                     </View>
@@ -154,6 +154,10 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         marginTop:30,
+    },
+    textHeader: {
+        color: '#1E90FF',
+        fontSize:15,
     },
     title: {
       fontSize: 50,
