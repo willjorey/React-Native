@@ -8,6 +8,7 @@ import {
     TextInput,
     Button,
     ToastAndroid,
+    TouchableOpacity,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
@@ -77,16 +78,31 @@ class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Username</Text>
-                <View style={styles.loginContainer}>
-                    <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
-                </View>
-                <Text>Password</Text>
-                <View style={styles.loginContainer}>
-                    <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
-                </View>
 
-                <Button onPress={() => {this.onPressButton()}} title='Login'/>
+                <View style={styles.loginContainer}>
+                    <Text style={styles.text}>Username</Text>
+                    <View style={styles.login}>
+                        <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
+                    </View>
+                    <Text style={styles.text}>Password</Text>
+                    <View style={styles.login}>
+                        <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
+                    </View>
+                </View>
+ 
+                <View style={styles.buttonContainer}>
+                    <View style={{padding: 5,}}>
+                        <TouchableOpacity style={styles.createLoginButton} onPress={() => {that.props.navigation.navigate('CreateLogin')}}>
+                            <Text style={styles.buttonText}>Create New Login</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{padding: 5,}}>
+                        <TouchableOpacity style={styles.loginButton} onPress={() => {this.onPressButton()}}>
+                            <Text style={styles.buttonText}>Login</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
 
             </View>
         );
@@ -120,6 +136,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Home);
 const styles = StyleSheet.create({
     container: {
       marginTop:30,
+      alignItems:'center',
+
     },
     title: {
       fontSize: 50,
@@ -129,19 +147,44 @@ const styles = StyleSheet.create({
       color: 'red',
     },
     loginContainer:{
-        width:200,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 5,
+        width:400,
+        height:200,
+    },
+    login:{
+        width:300,
         borderRadius: 4,
         borderWidth: 3,
         borderColor: '#d6d7da',
     },
-    tipText:{
+    text:{
         fontSize:25,
-        color: 'white',
       },
-      payButton:{
+    createLoginButton:{
+        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#FF3838',
-        padding: 10,
+        backgroundColor: '#1E90FF',
         height: 55,
-      },
+        width:220,
+        borderRadius: 5,
+    },
+    loginButton:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#1E90FF',
+        height: 55,
+        width:100,
+        borderRadius: 5,
+    },
+    buttonText: {
+        color: "white",
+        fontSize: 20,
+    },
+    buttonContainer: {
+        flexWrap: 'wrap', 
+        alignItems: 'flex-start',
+        flexDirection:'row',
+    }
   });

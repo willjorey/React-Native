@@ -7,16 +7,13 @@ import BlankScreen from './BlankScreen';
 
 class LoginScreen extends React.Component {
   static navigationOptions = {
-    title: 'Login',
+    header: null,
   };
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View >
+      <View style={{backgroundColor: 'white', flex:1}}>
         <Home navigation={this.props.navigation}/>
-        <Button
-        title="Create New Login"
-        onPress={() => navigate('CreateLogin') }/>
       </View>
     );
   }
