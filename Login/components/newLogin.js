@@ -6,7 +6,7 @@ import {
     View,
     Text,
     TextInput,
-    Button,
+    TouchableOpacity,
     ToastAndroid,
 } from 'react-native';
 
@@ -22,6 +22,8 @@ class newLogin extends Component {
         super(props);
 
         this.state = {
+            name: "",
+            email: "",
             user: "",
             pass: "",
             re_pass: "",
@@ -39,33 +41,56 @@ class newLogin extends Component {
         });
 
     };
-    createLogin = () => {
-        if(this.state.pass === this.state.re_pass){
-            let p = new Profile(this.state.user, this.state.pass);
-            this.async.storeLogin(p);
-            console.log(p);
-            ToastAndroid.showWithGravityAndOffset(
-                'Login Created',
-                ToastAndroid.LONG,
-                ToastAndroid.CENTER,
-                25,
-                50
-              );
-              this.props.navigation.navigate('Login'); 
+    checkNonEmpty = () => {
+        if( this.state.name === "" || this.state.email === "" || this.state.user === "" || this.state.pass === ""){
+            return false;
         }else{
-            ToastAndroid.showWithGravityAndOffset(
-                'Passwords Do not Match',
-                ToastAndroid.LONG,
-                ToastAndroid.TOP,
-                25,
-                50
-              );
+            return true;
         }
+    }
+    createLogin = () => {
+        if(this.checkNonEmpty()){
+
+            if(this.state.pass === this.state.re_pass){
+
+                if(this.state.pass.length > 3){
+                    let p = new Profile(this.state.user, this.state.pass);
+                    this.async.storeLogin(p);
+                    console.log(p);
+                    ToastAndroid.showWithGravityAndOffset('Login Created',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
+                    
+                    this.props.navigation.navigate('Login'); 
+
+                }else{
+                    ToastAndroid.showWithGravityAndOffset('Password is too short', ToastAndroid.LONG,ToastAndroid.TOP,25,50);
+                }
+
+            }else{
+                ToastAndroid.showWithGravityAndOffset('Passwords Do not Match',ToastAndroid.LONG,ToastAndroid.TOP,25,50);
+            }
+            
+        }else{
+            ToastAndroid.showWithGravityAndOffset('A Field is Empty',ToastAndroid.LONG,ToastAndroid.TOP,25,50);
+        };
     };
 
     render() {
         return (
             <View style={styles.container}>
+
+                <View style={{padding:10}}>
+                    <Text style={{color: '#1E90FF'}}>Name</Text>
+                    <View style={styles.loginContainer}>
+                        <TextInput underlineColorAndroid="transparent" value={this.state.name} onChangeText={(value) => {this.setState({name: value})}}/>
+                    </View>
+                </View>
+
+                <View style={{padding:10}}>
+                    <Text style={{color: '#1E90FF'}}>E-mail</Text>
+                    <View style={styles.loginContainer}>
+                        <TextInput underlineColorAndroid="transparent" value={this.state.email} onChangeText={(value) => {this.setState({email: value})}}/>
+                    </View>
+                </View>
                 <View style={{padding:10}}>
                     <Text style={{color: '#1E90FF'}}>Enter Username</Text>
                     <View style={styles.loginContainer}>
@@ -74,21 +99,27 @@ class newLogin extends Component {
                 </View>
 
                 <View style={{padding:10}}>
-                    <Text style={{color: '#1E90FF'}}> Password</Text>
+                    <Text style={{color: '#1E90FF'}}>Password</Text>
                     <View style={styles.loginContainer}>
                         <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
                     </View>
                 </View>
 
                 <View style={{padding:10}}>
-                    <Text style={{color: '#1E90FF'}}> Re-Type Password</Text>
+                    <Text style={{color: '#1E90FF'}}>Re-Type Password</Text>
                     <View style={styles.loginContainer}>
                         <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.re_pass} onChangeText={(value) => {this.setState({re_pass: value})}}/>
                     </View>
                 </View>
 
 
-                <Button onPress={() => {this.createLogin()}} title='Create'/>
+                {/* <Button onPress={() => {this.createLogin()}} title='Create'/> */}
+
+                <View style={{padding: 5,}}>
+                    <TouchableOpacity style={styles.signupButton} onPress={() => {this.createLogin()}}>
+                        <Text style={styles.buttonText}>Sign Up</Text>
+                    </TouchableOpacity>
+                </View>
 
             </View>
         );
@@ -136,14 +167,19 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: '#1E90FF',
     },
-    tipText:{
-        fontSize:25,
-        color: 'white',
+    buttonText:{
+        fontSize:20,
+        color: '#1E90FF',
       },
-      payButton:{
+    signupButton:{
+        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#FF3838',
-        padding: 10,
+        backgroundColor: 'white',
         height: 55,
-      },
+        width:200,
+        borderRadius: 50,
+        borderWidth: 2,
+        borderColor: '#1E90FF',
+        top:100,
+    },
   });
