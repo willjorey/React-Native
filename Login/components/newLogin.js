@@ -56,7 +56,6 @@ class newLogin extends Component {
                 if(this.state.pass.length > 3){
                     let p = new Profile(this.state.name, this.state.email, this.state.user, this.state.pass);
                     this.async.storeLogin(p);
-                    console.log(p);
                     ToastAndroid.showWithGravityAndOffset('Login Created',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
                     
                     this.props.navigation.navigate('Login'); 

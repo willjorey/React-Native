@@ -35,6 +35,14 @@ export default class Profile{
         this.username = obj.username;
         this.password = obj.password;
         this.subscriptions = obj.subscriptions;
+    };
+
+    checkSubscription = (sub) =>{
+        for (let i = 0; i < this.getSubscriptions().length; i ++){
+            if (sub === this.getSubscriptions()[i])
+                return true;
+        }
+        return false;
     }
  
 }

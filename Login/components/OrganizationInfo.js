@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     ImageBackground,
     ScrollView,
+    ToastAndroid,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
@@ -18,22 +19,38 @@ import * as Actions from '../actions'; //Import your actions
 class OrganizationInfo extends Component {
     constructor(props) {
         super(props);
-        this.organization = this.props.organization
+        this.organization = this.props.organization;
+        this.key = this.organization.name;
         this.state = {
             leagues: this.organization.getLeagues(),
+            subscribed: false,
         };
-
+        this.profile = this.props.profile;
+        
     }
+    componentDidMount = () =>{
+        if (this.profile.checkSubscription(this.key)){
+            this.setState({
+                subscribed: true
+            });
+        };
+    }
+    
     subscribe = (sub) => {
-        let p = this.props.profile;
-        p.addSubscription(sub);
-        console.log(p);
+        if (this.state.subscribed){
+            ToastAndroid.showWithGravityAndOffset('Already Subscribed',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
+        }else{
+            this.profile.addSubscription(sub);
+            this.setState({
+                subscribed:true
+            })
+        }
     }
     render() {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <TouchableOpacity style={styles.subButton} onPress={() => {this.subscribe(this.organization.name)}}>
+                    <TouchableOpacity style={styles.subButton} onPress={() => {this.subscribe(this.key)}}>
                             <Text style={styles.subText}>Subscribe</Text>
                     </TouchableOpacity>
                     <FlatList
@@ -84,6 +101,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(OrganizationInfo);
 const styles = StyleSheet.create({
     container: {
       marginTop:30,
+      alignItems: 'center'
     },
     textBox:{
         backgroundColor: 'black',
