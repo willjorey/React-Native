@@ -2,6 +2,8 @@ export const DATA_AVAILABLE = 'DATA_AVAILABLE';
 export const SET_LOGIN = 'SET_LOGIN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const SET_PROFILE = 'SET_PROFILE';
+export const LOGOUT_PROFILE = 'LOGOUT_PROFILE';
 //Import the sample data
 // import Data from '../instructions.json';
  
@@ -41,6 +43,13 @@ export function setLogin(user, pass){
 
 export function logout(){
     return (dispatch) => {
-        dispatch({type: LOGOUT})
+        dispatch({type: LOGOUT});
+        dispatch({type: LOGOUT_PROFILE})
     }
-}
+};
+
+export function setProfile(pro){
+    return (dispatch) => {
+        dispatch({type: SET_PROFILE, profile: pro});
+    };
+};

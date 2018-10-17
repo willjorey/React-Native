@@ -4,14 +4,17 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
-    Button,
     Text,
     ToastAndroid,
     FlatList,
     TouchableOpacity,
     Image,
+    ImageBackground,
     ScrollView,
 } from 'react-native';
+
+import {LinearGradient} from 'expo';
+
 import Organization from '../components/Organization';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
@@ -30,6 +33,7 @@ class successfulLogin extends Component {
         let test = []
         let z = new Organization("MUMBA");
         let x = new Organization("NBA");
+        z.addLeague('Houseleague');
         test.push(z);
         test.push(x);
         test.push(z);
@@ -51,6 +55,9 @@ class successfulLogin extends Component {
           this.props.navigation.replace('Title');
     };
 
+    onItem = (org) =>{
+        this.props.navigation.navigate('Organization',{organization: org});
+    }
     render() {
         return (
             <ScrollView>
@@ -59,13 +66,16 @@ class successfulLogin extends Component {
 
                         <FlatList
                             data={this.state.orgs}
-                            keyExtractor={(item, index) => index.toString()}
+                            keyExtractor={(item,index) => index.toString()}
                             renderItem={({item}) =>
-                            <View style={{padding: 5}}> 
-                                <TouchableOpacity style={{backgroundColor: item.color, opacity:0.8, borderRadius: 50, alignItems: 'center'}}>
+                            <View style={{padding: 5, alignItems: 'center'}}> 
+                                <TouchableOpacity onPress={() => {this.onItem(item)}}>
                                     <View style={styles.orgItem}>
-                                        <Image source={require('../assets/logo.png')} style={{height:50, width: 50, right:70, top: 10}} />
-                                        <Text style={styles.text}>{item.name}</Text>
+                                        <ImageBackground source={require('../assets/raptors.png')} style={{height:'100%', width: '100%',}}>
+                                            <View style={styles.textBox}>
+                                                <Text style={styles.text}>{item.name}</Text>
+                                            </View>
+                                        </ImageBackground>
                                     </View>
                                 </TouchableOpacity>
                             </View>
@@ -90,9 +100,7 @@ class successfulLogin extends Component {
 // This function makes Redux know that this component needs to be passed a piece of the state
 function mapStateToProps(state, props) {
     return {
-        username: state.loginReducer.username,
-        password: state.loginReducer.password,
-        login: state.loginReducer.login,
+        profile:state.profileReducer.profile
     }
 }
 
@@ -110,22 +118,17 @@ const styles = StyleSheet.create({
     container: {
       marginTop:30,
     },
-    title: {
-      fontSize: 50,
-      fontWeight: 'bold',
-    },
-    activeTitle: {
-      color: 'red',
-    },
-    loginContainer:{
-        width:200,
-        borderRadius: 4,
-        borderWidth: 3,
-        borderColor: '#d6d7da',
+    textBox:{
+        backgroundColor: 'black',
+        opacity: 0.7,
+        width: 150,
+        height: 150,
     },
     text:{
-        fontSize:50,
-        color: 'black',
+        left:20,
+        top:90,
+        fontSize:25,
+        color: 'white',
       },
     orgButton:{
         alignItems: 'center',
@@ -134,9 +137,9 @@ const styles = StyleSheet.create({
         height: 55,
     },
     orgItem:{
-        flexWrap: 'wrap', 
-        alignItems: 'flex-start',
-        flexDirection:'row',
+
+        height: 150,
+        width:380,
     },
     logoutButton:{
         justifyContent: 'center',

@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
 import Async from './Async';
+import Profile from './Profile';
 
 class Home extends Component {
     constructor(props) {
@@ -50,8 +51,13 @@ class Home extends Component {
         //Check if the login exists: If so change state of loginReducer
         this.async.getLogin(key).then( (value) => {
             if (value !== null){
+                let obj = JSON.parse(value);
+                let profile = new Profile();
+                profile.copyObj(obj);
+
                 that.props.Login();
                 that.props.setLogin(that.state.user,that.state.pass);
+                that.props.setProfile(profile);
                 that.props.navigation.navigate('Main');
             }else{
                 ToastAndroid.showWithGravityAndOffset(
@@ -116,6 +122,7 @@ function mapStateToProps(state, props) {
         username: state.loginReducer.username,
         password: state.loginReducer.password,
         login: state.loginReducer.login,
+        profile: state.profileReducer.profile,
     }
 }
 

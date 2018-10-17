@@ -1,5 +1,5 @@
 export default class Profile{
-    constructor(name,email, username,password){
+    constructor(name,email, username, password){
         this.name = name;
         this.email = email;
         this.username = username;
@@ -27,6 +27,14 @@ export default class Profile{
     }
     addSubscription = (sub) =>{
         this.getSubscriptions().push(sub);
+    }
+
+    copyObj = (obj) => {
+        this.name = obj.name;
+        this.email = obj.email;
+        this.username = obj.username;
+        this.password = obj.password;
+        this.subscriptions = obj.subscriptions;
     }
  
 }

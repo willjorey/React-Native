@@ -54,9 +54,7 @@ class Title extends Component {
 // This function makes Redux know that this component needs to be passed a piece of the state
 function mapStateToProps(state, props) {
     return {
-        username: state.loginReducer.username,
-        password: state.loginReducer.password,
-        login: state.loginReducer.login,
+        profile: state.profileReducer.profile,
     }
 }
 
