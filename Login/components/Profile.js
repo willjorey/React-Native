@@ -39,7 +39,7 @@ export default class Profile{
 
     checkSubscription = (sub) =>{
         for (let i = 0; i < this.getSubscriptions().length; i ++){
-            if (sub === this.getSubscriptions()[i])
+            if (sub === this.getSubscriptions()[i].name)
                 return true;
         }
         return false;

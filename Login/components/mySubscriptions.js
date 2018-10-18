@@ -24,7 +24,9 @@ class mySubscriptions extends Component {
         this.state = {
             subs: this.profile.getSubscriptions(),
         };
-        
+    }
+    onPressSub = (org) => {
+        this.props.navigation.navigate('Organization',{organization: org});
     }
     render() {
         return (
@@ -37,11 +39,11 @@ class mySubscriptions extends Component {
                             keyExtractor={(item,index) => index.toString()}
                             renderItem={({item}) =>
                             <View style={{padding: 5, alignItems: 'center'}}> 
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={() => {this.onPressSub(item)}}>
                                     <View style={styles.orgItem}>
                                         <ImageBackground source={require('../assets/logo.png')} style={{height:'100%', width: '100%',}}>
                                             <View style={styles.textBox}>
-                                                <Text style={styles.text}>{item}</Text>
+                                                <Text style={styles.text}>{item.name}</Text>
                                             </View>
                                         </ImageBackground>
                                     </View>

@@ -31,7 +31,8 @@ class OrganizationInfo extends Component {
         
     }
     componentDidMount = () =>{
-        if (this.profile.checkSubscription(this.key)){
+        let boo = this.profile.checkSubscription(this.key);
+        if (boo){
             this.setState({
                 subscribed: true,
                 subText: 'Subscribed'
@@ -39,11 +40,11 @@ class OrganizationInfo extends Component {
         };
     }
     
-    subscribe = (sub) => {
+    subscribe = () => {
         if (this.state.subscribed){
             ToastAndroid.showWithGravityAndOffset('Already Subscribed',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
         }else{
-            this.props.profile.addSubscription(sub);
+            this.props.profile.addSubscription(this.organization);
             this.props.setProfile(this.profile);
             ToastAndroid.showWithGravityAndOffset('You are now Subscribed',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
             this.setState({
@@ -57,8 +58,8 @@ class OrganizationInfo extends Component {
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.bannerBox}>
-                        <ImageBackground source={require('../assets/raptors.png')} style={styles.bannerImage}>
-                            <TouchableOpacity style={styles.subButton} onPress={() => {this.subscribe(this.key)}}>
+                        <ImageBackground source={{uri: this.organization.getBanner()}} style={styles.bannerImage}>
+                            <TouchableOpacity style={styles.subButton} onPress={() => {this.subscribe()}}>
                                 <Text style={styles.subText}>{this.state.subText}</Text>
                             </TouchableOpacity>
                         </ImageBackground>

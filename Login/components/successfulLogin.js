@@ -28,9 +28,13 @@ class successfulLogin extends Component {
     }
 
     componentDidMount = () => {
+        // GRAB ORGANIZATIONS FROM DATABASE
+        // DUMMY ORGANIZATIONS ARE TEMP HERE
         let test = []
         let z = new Organization("MUMBA");
+        z.setBanner('http://www.bladecreativebranding.com/blog/wp-content/uploads/2014/12/Toronto-Raptors-New-Logo-2014-Feature-Banner-NEW-800x412.png');
         let x = new Organization("NBA");
+        x.setBanner('https://wallpaper-house.com/data/out/9/wallpaper2you_296628.jpg');
         z.addLeague('Houseleague');
         test.push(z);
         test.push(x);
@@ -57,7 +61,7 @@ class successfulLogin extends Component {
                             <View style={{padding: 5, alignItems: 'center'}}> 
                                 <TouchableOpacity onPress={() => {this.onItem(item)}}>
                                     <View style={styles.orgItem}>
-                                        <ImageBackground source={require('../assets/raptors.png')} style={{height:'100%', width: '100%',}}>
+                                        <ImageBackground source={{uri: item.getBanner()}} style={{height:'100%', width: '100%',}}>
                                             <View style={styles.textBox}>
                                                 <Text style={styles.text}>{item.name}</Text>
                                             </View>

@@ -19,6 +19,12 @@ export default class Organization{
     };
     addLeague = (league) => {
         this.getLeagues().push(league)
+    };
+    setBanner = (banner) => {
+        this.banner = banner;
+    };
+    getBanner = () => {
+        return this.banner;
     }
  
 }

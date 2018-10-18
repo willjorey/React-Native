@@ -24,7 +24,7 @@ export default new createStackNavigator({
     }
   },
   Organization:{
-    screen: OrganizationScreen
+    screen: OrganizationScreen,
   },
   Title:{
     screen: TitleScreen
