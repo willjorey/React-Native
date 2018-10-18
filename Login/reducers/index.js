@@ -37,7 +37,7 @@ const profileReducer = (state = profileState, action) => {
             state = {...profileState, profile: action.profile};
             return state;
         case LOGOUT_PROFILE:
-            state = {...profileState.profile}
+            state = {...profileState.profile};
         default:
             return state;
     }

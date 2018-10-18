@@ -13,8 +13,6 @@ import {
     ScrollView,
 } from 'react-native';
 
-import {LinearGradient} from 'expo';
-
 import Organization from '../components/Organization';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
@@ -42,18 +40,6 @@ class successfulLogin extends Component {
             orgs: test,
         })
     }
-
-    logout = () => {
-        this.props.logout();
-        ToastAndroid.showWithGravityAndOffset(
-            'Successfully Logged Out',
-            ToastAndroid.LONG,
-            ToastAndroid.CENTER,
-            25,
-            50
-          );
-          this.props.navigation.replace('Title');
-    };
 
     onItem = (org) =>{
         this.props.navigation.navigate('Organization',{organization: org});
@@ -83,9 +69,6 @@ class successfulLogin extends Component {
                         />
                         
                     </View>
-                    <TouchableOpacity style={styles.logoutButton} onPress={() => {this.logout()}}>
-                            <Text style={styles.logoutText}>Logout</Text>
-                    </TouchableOpacity>
                 </View>
             </ScrollView> 
         );

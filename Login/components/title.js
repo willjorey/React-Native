@@ -20,6 +20,9 @@ class Title extends Component {
     }
 
     componentDidMount() {
+        if( this.props.profile !== {}){
+            this.props.logout();
+        };
         // this.props.getData(); //call our action
     };
 

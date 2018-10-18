@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, DrawerItems} from 'react-navigation';
+import { ScrollView, SafeAreaView, Image, Dimensions, View , TouchableOpacity, Text} from 'react-native';
+import {bindActionCreators} from 'redux';
+import * as Actions from './actions';
+
 import TitleScreen from './screens/TitleScreen';
 import LoginScreen from './screens/LoginScreen';
 import CreateLoginScreen from './screens/CreateLoginScreen';
@@ -16,12 +20,39 @@ class Nav extends Component {
         <Navigator />
       )
     }
-  }
+}
 
+const DrawerComponent = (props) => {
+    logout = () => {
+        props.navigation.replace('Title');
+    }
+    return(
+    <SafeAreaView style={{flex:1}}>
+        <View style={{height: 150, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center'}}>
+            <Image source={require('./assets/logo.png')} style={{height:120, width:120}} />
+        </View>
+        <ScrollView>
+            <DrawerItems {...props}/>
+        </ScrollView>
+        <TouchableOpacity style={{alignItems:'center', padding: 10, backgroundColor:'#1E90FF'}}onPress={() => {this.logout()}}>
+            <Text style={{fontSize:15, fontWeight:'bold', color:"white"}}>Logout</Text>
+        </TouchableOpacity>    
+    </SafeAreaView>
+    );
+} 
 const drawer = new createDrawerNavigator({
     Home: {
         screen: MainScreen,
     },
+    Subscriptions: {
+        screen: SettingsScreen,
+    },
+    Settings:{
+        screen: SettingsScreen,
+    },
+
+}, {
+    contentComponent: DrawerComponent
 })
 
 export const Navigator = new createStackNavigator({
@@ -57,18 +88,15 @@ export const Navigator = new createStackNavigator({
         screen: drawer,
         navigationOptions:{
             header:null
-            // headerLeft:null,
-            // title: '',
-            // headerTintColor: 'white',
-            // headerStyle:{
-            //     backgroundColor: '#1E90FF'
-            // }
         }
     }
 })
 
 const mapStateToProps = state => ({
     navigation: state.navigation,
-  })
-  
-export default connect(mapStateToProps)(Nav)
+  });
+
+  function mapDispatchToProps(dispatch) {
+    return bindActionCreators(Actions, dispatch);
+}  
+export default connect(mapStateToProps, mapDispatchToProps)(Nav)
