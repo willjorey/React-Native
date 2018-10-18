@@ -1,18 +1,7 @@
 import { combineReducers } from 'redux';
  
-import { DATA_AVAILABLE, SET_LOGIN, LOGIN, LOGOUT, SET_PROFILE, LOGOUT_PROFILE } from "../actions/" //Import the actions types constant we defined in our actions
- 
-// let dataState = { data: [], loading:true };
- 
-// const dataReducer = (state = dataState, action) => {
-//     switch (action.type) {
-//         case DATA_AVAILABLE:
-//             state = Object.assign({}, state, { data: action.data, loading:false });
-//             return state;
-//         default:
-//             return state;
-//     }
-// };
+import { SET_LOGIN, LOGIN, LOGOUT, SET_PROFILE, LOGOUT_PROFILE } from "../actions/" //Import the actions types constant we defined in our actions
+
 
 let loginState = {username: '', password: '', login: false};
 const loginReducer = (state = loginState, action) => {

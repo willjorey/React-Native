@@ -12,6 +12,7 @@ import BlankScreen from './screens/BlankScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { createDrawerNavigator } from 'react-navigation';
 import MainScreen from './screens/MainScreen';
+import SubscriptionScreen from './screens/SubscriptionScreen';
 
 
 class Nav extends Component {
@@ -45,7 +46,7 @@ const drawer = new createDrawerNavigator({
         screen: MainScreen,
     },
     Subscriptions: {
-        screen: SettingsScreen,
+        screen: SubscriptionScreen,
     },
     Settings:{
         screen: SettingsScreen,

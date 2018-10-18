@@ -4,6 +4,8 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SET_PROFILE = 'SET_PROFILE';
 export const LOGOUT_PROFILE = 'LOGOUT_PROFILE';
+export const ADD_SUB = 'ADD_SUB';
+
 //Import the sample data
 // import Data from '../instructions.json';
  

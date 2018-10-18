@@ -17,56 +17,23 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../actions'; //Import your actions
 
-class OrganizationInfo extends Component {
+class mySubscriptions extends Component {
     constructor(props) {
         super(props);
-        this.organization = this.props.organization;
-        this.key = this.organization.name;
-        this.state = {
-            leagues: this.organization.getLeagues(),
-            subscribed: false,
-            subText: "Subscribe",
-        };
         this.profile = this.props.profile;
-        
-    }
-    componentDidMount = () =>{
-        if (this.profile.checkSubscription(this.key)){
-            this.setState({
-                subscribed: true,
-                subText: 'Subscribed'
-            });
+        this.state = {
+            subs: this.profile.getSubscriptions(),
         };
-    }
-    
-    subscribe = (sub) => {
-        if (this.state.subscribed){
-            ToastAndroid.showWithGravityAndOffset('Already Subscribed',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
-        }else{
-            this.props.profile.addSubscription(sub);
-            this.props.setProfile(this.profile);
-            ToastAndroid.showWithGravityAndOffset('You are now Subscribed',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
-            this.setState({
-                subscribed:true,
-                subText: 'Subscribed'
-            })
-        }
+        
     }
     render() {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={styles.bannerBox}>
-                        <ImageBackground source={require('../assets/raptors.png')} style={styles.bannerImage}>
-                            <TouchableOpacity style={styles.subButton} onPress={() => {this.subscribe(this.key)}}>
-                                <Text style={styles.subText}>{this.state.subText}</Text>
-                            </TouchableOpacity>
-                        </ImageBackground>
-                    </View>
 
                     <View>
                         <FlatList
-                            data={this.state.leagues}
+                            data={this.state.subs}
                             keyExtractor={(item,index) => index.toString()}
                             renderItem={({item}) =>
                             <View style={{padding: 5, alignItems: 'center'}}> 
@@ -104,13 +71,13 @@ function mapStateToProps(state, props) {
 
 // Doing this merges our actions into the component’s props,
 // while wrapping them in dispatch() so that they immediately dispatch an Action.
-// Just by doing this, we will have access to the actions defined in out actions file (action/OrganizationInfo.js)
+// Just by doing this, we will have access to the actions defined in out actions file (action/mySubscriptions.js)
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(Actions, dispatch);
 }
 
 //Connect everything
-export default connect(mapStateToProps, mapDispatchToProps)(OrganizationInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(mySubscriptions);
 
 const styles = StyleSheet.create({
     container: {
