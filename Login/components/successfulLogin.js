@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
         height: 55,
     },
     orgItem:{
-
         height: 150,
         width:380,
     },

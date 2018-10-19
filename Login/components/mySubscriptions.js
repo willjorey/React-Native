@@ -32,7 +32,9 @@ class mySubscriptions extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-
+                    <View style={styles.headerBox}>
+                        <Text style={styles.headerText}>Subscriptions</Text>
+                    </View>
                     <View>
                         <FlatList
                             data={this.state.subs}
@@ -41,7 +43,7 @@ class mySubscriptions extends Component {
                             <View style={{padding: 5, alignItems: 'center'}}> 
                                 <TouchableOpacity onPress={() => {this.onPressSub(item)}}>
                                     <View style={styles.orgItem}>
-                                        <ImageBackground source={require('../assets/logo.png')} style={{height:'100%', width: '100%',}}>
+                                        <ImageBackground source={{uri: item.getBanner()}} style={{height:'100%', width: '100%',}}>
                                             <View style={styles.textBox}>
                                                 <Text style={styles.text}>{item.name}</Text>
                                             </View>
@@ -86,6 +88,19 @@ const styles = StyleSheet.create({
       marginTop:30,
       alignItems: 'center'
     },
+    headerBox:{
+        backgroundColor: 'black',
+        width:420,
+        height:60,
+        bottom: 8,
+    },
+    headerText:{
+        left: 10,
+        top: 20,
+        fontWeight: 'bold',
+        fontSize:30,
+        color: 'white',
+    },
     bannerBox:{
         alignItems: 'center'
     },
@@ -113,7 +128,7 @@ const styles = StyleSheet.create({
         height: 55,
     },
     orgItem:{
-        height: 100,
+        height: 150,
         width:380,
     },
     subButton:{
