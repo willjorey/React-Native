@@ -24,5 +24,11 @@ export default new createStackNavigator({
     },
     Organization:{
       screen: OrganizationScreen,
+      navigationOptions:{
+        headerTintColor: 'white',
+        headerStyle:{
+        backgroundColor: 'black'
+        }
+      }
     },
   })

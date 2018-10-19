@@ -19,62 +19,53 @@ import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
 import Tournament from './Tournament';
+import Game from './Game';
 
-class successfulLogin extends Component {
+const g = new Game('Raptors', 'Cavaliers', '10-17-2018');
+
+class TournamentInfo extends Component {
     constructor(props) {
         super(props);
+        this.tournament = this.props.tournament;
+        this.tournament.addGame(g);
+
         this.state = {
-            orgs: [],
+            games: this.tournament.getGames(),
         };
     }
 
-    componentDidMount = () => {
-        // GRAB ORGANIZATIONS FROM DATABASE
-        // DUMMY ORGANIZATIONS ARE TEMP HERE
-        let test = []
-        let z = new Organization("MUMBA");
-        z.setBanner('http://www.bladecreativebranding.com/blog/wp-content/uploads/2014/12/Toronto-Raptors-New-Logo-2014-Feature-Banner-NEW-800x412.png');
-        let x = new Organization("NBA");
-        x.setBanner('https://wallpaper-house.com/data/out/9/wallpaper2you_296628.jpg');
-        let y = new Tournament('Houseleague', '10-19-2018');
-        z.addTournament(y);
-        test.push(z);
-        test.push(x);
-        test.push(z);
-        test.push(x);
-        this.setState({
-            orgs: test,
-        })
-    }
-
-    onItem = (org) =>{
-        this.props.navigation.navigate('Organization',{organization: org});
-    }
     render() {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <View>
 
-                        <FlatList
-                            data={this.state.orgs}
+                    <FlatList
+                            data={this.state.games}
                             keyExtractor={(item,index) => index.toString()}
                             renderItem={({item}) =>
                             <View style={{padding: 5, alignItems: 'center'}}> 
-                                <TouchableOpacity onPress={() => {this.onItem(item)}}>
+                                <TouchableOpacity>
                                     <View style={styles.orgItem}>
-                                        <ImageBackground source={{uri: item.getBanner()}} style={{height:'100%', width: '100%',}}>
                                             <View style={styles.textBox}>
-                                                <Text style={styles.text}>{item.name}</Text>
+                                                <Text>{item.getDate()}</Text>
+                                                <View style={styles.gameInfo}>
+                                                    <View style= {{padding: 20}}>
+                                                        <Text style={styles.text}>{item.getHomeName()}</Text>
+                                                    </View>
+                                                        <Text style={styles.text}>{item.getHomeScore()}</Text>
+                                                        <Text style={{fontSize: 10, fontWeight: 'bold', padding: 10}}> FINAL </Text>
+                                                        <Text style={styles.text}>{item.getAwayScore()}</Text>
+
+                                                    <View style= {{padding: 20}}>
+                                                        <Text style={styles.text}>{item.getAwayName()}</Text>
+                                                    </View>
+                                                </View>
                                             </View>
-                                        </ImageBackground>
                                     </View>
                                 </TouchableOpacity>
                             </View>
                             }
                         />
-                        
-                    </View>
                 </View>
             </ScrollView> 
         );
@@ -95,29 +86,34 @@ function mapStateToProps(state, props) {
 
 // Doing this merges our actions into the component’s props,
 // while wrapping them in dispatch() so that they immediately dispatch an Action.
-// Just by doing this, we will have access to the actions defined in out actions file (action/successfulLogin.js)
+// Just by doing this, we will have access to the actions defined in out actions file (action/TournamentInfo.js)
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(Actions, dispatch);
 }
 
 //Connect everything
-export default connect(mapStateToProps, mapDispatchToProps)(successfulLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(TournamentInfo);
 
 const styles = StyleSheet.create({
     container: {
       marginTop:30,
     },
+    gameInfo:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    },
     textBox:{
-        backgroundColor: 'black',
+        alignItems: 'center',
+        backgroundColor: 'white',
         opacity: 0.7,
-        width: 150,
-        height: 150,
+        width: '100%',
+        height: 100,
     },
     text:{
-        left:20,
-        top:90,
         fontSize:25,
-        color: 'white',
+        color: 'black',
       },
     orgButton:{
         alignItems: 'center',
@@ -126,8 +122,8 @@ const styles = StyleSheet.create({
         height: 55,
     },
     orgItem:{
-        height: 150,
-        width:380,
+        height: 100,
+        width: 400,
     },
     logoutButton:{
         justifyContent: 'center',

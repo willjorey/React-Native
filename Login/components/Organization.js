@@ -1,7 +1,6 @@
 export default class Organization{
     constructor(name){
         this.name = name;
-        this.leagues=[];
         this.tournaments = [];
         this.num_subs = 0;
         this.color = '#1E90FF';
@@ -14,11 +13,11 @@ export default class Organization{
     getSubCount = () => {
         return this.num_subs;
     };
-    getLeagues = () => {
-        return this.leagues;
+    getTournaments = () => {
+        return this.tournaments;
     };
-    addLeague = (league) => {
-        this.getLeagues().push(league)
+    addTournament = (tourn) => {
+        this.getTournaments().push(tourn)
     };
     setBanner = (banner) => {
         this.banner = banner;

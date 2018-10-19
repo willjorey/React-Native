@@ -92,13 +92,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         width:420,
         height:60,
-        bottom: 8,
+        bottom: 30 ,
     },
     headerText:{
         left: 10,
-        top: 20,
+        top: 30,
         fontWeight: 'bold',
-        fontSize:30,
+        fontSize:20,
         color: 'white',
     },
     bannerBox:{

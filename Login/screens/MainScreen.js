@@ -4,6 +4,7 @@ import SuccessfulLogin from '../components/successfulLogin';
 import { createStackNavigator } from 'react-navigation';
 import OrganizationScreen from './OrganizationScreen';
 import TitleScreen from './TitleScreen';
+import TournamentScreen from './TournamentScreen';
 
 class MainScreen extends Component {
 
@@ -20,11 +21,27 @@ export default new createStackNavigator({
   Main:{
     screen: MainScreen,
     navigationOptions:{
-      header:null
+      header:null,
     }
   },
   Organization:{
     screen: OrganizationScreen,
+    navigationOptions:{
+      headerTintColor: 'white',
+      headerStyle:{
+      backgroundColor: 'black'
+      }
+    }
+  },
+  Tournament:{
+    screen: TournamentScreen,
+    navigationOptions:{
+      title: 'Games',
+      headerTintColor: 'white',
+      headerStyle:{
+      backgroundColor: 'black'
+      }
+    }
   },
   Title:{
     screen: TitleScreen

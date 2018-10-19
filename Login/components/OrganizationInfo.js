@@ -23,7 +23,7 @@ class OrganizationInfo extends Component {
         this.organization = this.props.organization;
         this.key = this.organization.name;
         this.state = {
-            leagues: this.organization.getLeagues(),
+            tournaments: this.organization.getTournaments(),
             subscribed: false,
             subText: "Subscribe",
         };
@@ -53,6 +53,10 @@ class OrganizationInfo extends Component {
             })
         }
     }
+
+    onOrgPress = (tourn) => {
+        this.props.navigation.navigate('Tournament', {tournament: tourn})
+    }
     render() {
         return (
             <ScrollView>
@@ -67,15 +71,15 @@ class OrganizationInfo extends Component {
 
                     <View>
                         <FlatList
-                            data={this.state.leagues}
+                            data={this.state.tournaments}
                             keyExtractor={(item,index) => index.toString()}
                             renderItem={({item}) =>
                             <View style={{padding: 5, alignItems: 'center'}}> 
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={() => {this.onOrgPress(item)}}>
                                     <View style={styles.orgItem}>
                                         <ImageBackground source={require('../assets/logo.png')} style={{height:'100%', width: '100%',}}>
                                             <View style={styles.textBox}>
-                                                <Text style={styles.text}>{item}</Text>
+                                                <Text style={styles.text}>{item.getName()}</Text>
                                             </View>
                                         </ImageBackground>
                                     </View>
