@@ -31,6 +31,7 @@ class TournamentInfo extends Component {
 
         this.state = {
             games: this.tournament.getGames(),
+            msg: 'No Tournaments Available',
         };
     }
 
@@ -38,7 +39,6 @@ class TournamentInfo extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-
                     <FlatList
                             data={this.state.games}
                             keyExtractor={(item,index) => index.toString()}

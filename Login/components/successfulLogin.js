@@ -13,6 +13,8 @@ import {
     ScrollView,
 } from 'react-native';
 
+import { SearchBar } from 'react-native-elements'
+
 import Organization from '../components/Organization';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
@@ -23,8 +25,10 @@ import Tournament from './Tournament';
 class successfulLogin extends Component {
     constructor(props) {
         super(props);
+        this.list;
         this.state = {
             orgs: [],
+            query: '',
         };
     }
 
@@ -42,6 +46,11 @@ class successfulLogin extends Component {
         test.push(x);
         test.push(z);
         test.push(x);
+        test.push(z);
+        test.push(x);
+        test.push(z);
+        test.push(x);
+        this.list = test;
         this.setState({
             orgs: test,
         })
@@ -50,33 +59,67 @@ class successfulLogin extends Component {
     onItem = (org) =>{
         this.props.navigation.navigate('Organization',{organization: org});
     }
+
+    onSearch = (value) => {
+        let temp = [];
+        if( value.length !== 0 ){
+            for (let i = 0; i < this.state.orgs.length; i++){
+                if(value === this.state.orgs[i].getName()){
+                    temp.push(this.state.orgs[i])
+                }
+            }
+            if (temp.length !== 0){
+                this.setState({
+                    orgs: temp
+                })
+            };
+        }else{
+            this.setState({
+                orgs: this.list
+            })
+        }
+
+
+    };
+
     render() {
         return (
-            <ScrollView>
-                <View style={styles.container}>
-                    <View>
-
-                        <FlatList
-                            data={this.state.orgs}
-                            keyExtractor={(item,index) => index.toString()}
-                            renderItem={({item}) =>
-                            <View style={{padding: 5, alignItems: 'center'}}> 
-                                <TouchableOpacity onPress={() => {this.onItem(item)}}>
-                                    <View style={styles.orgItem}>
-                                        <ImageBackground source={{uri: item.getBanner()}} style={{height:'100%', width: '100%',}}>
-                                            <View style={styles.textBox}>
-                                                <Text style={styles.text}>{item.name}</Text>
-                                            </View>
-                                        </ImageBackground>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            }
-                        />
-                        
+            <View style={StyleSheet.absoluteFill}>
+                <View style={{backgroundColor: 'black', height:90, }}>
+                    <View style={{top:25}}>
+                            <SearchBar
+                                darkTheme
+                                onChangeText={(value => {this.onSearch(value)})}
+                                placeholder='Search For Organization' />
                     </View>
                 </View>
-            </ScrollView> 
+
+                <ScrollView>
+                    <View style={styles.container}>
+                        <View>
+                            <FlatList
+                                data={this.state.orgs}
+                                keyExtractor={(item,index) => index.toString()}
+                                renderItem={({item}) =>
+                                <View style={{padding: 5, alignItems: 'center'}}> 
+                                    <TouchableOpacity onPress={() => {this.onItem(item)}}>
+                                        <View style={styles.orgItem}>
+                                            <ImageBackground source={{uri: item.getBanner()}} style={{height:'100%', width: '100%',}}>
+                                                <View style={styles.textBox}>
+                                                    <Text style={styles.text}>{item.name}</Text>
+                                                </View>
+                                            </ImageBackground>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                                }
+                            />
+                            
+                        </View>
+                    </View>
+                </ScrollView> 
+            </View>
+
         );
     }
 
