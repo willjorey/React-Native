@@ -31,6 +31,7 @@ const profileReducer = (state = profileState, action) => {
             return state;
     }
 }
+
 // Combine all the reducers
 const rootReducer = combineReducers({
     // dataReducer,

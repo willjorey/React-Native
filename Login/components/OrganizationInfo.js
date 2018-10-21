@@ -17,13 +17,16 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../actions'; //Import your actions
 
+
 class OrganizationInfo extends Component {
     constructor(props) {
         super(props);
         this.organization = this.props.organization;
-        this.key = this.organization.name;
+        this.key = this.organization.getKey();
+
+        this.name = this.organization.name;
         this.state = {
-            tournaments: this.organization.getTournaments(),
+            tournaments: [],
             subscribed: false,
             subText: "Subscribe",
         };
@@ -31,7 +34,14 @@ class OrganizationInfo extends Component {
         
     }
     componentDidMount = () =>{
-        let boo = this.profile.checkSubscription(this.key);
+        //Parse and Get tournaments
+        this.organization.parseTournaments();
+        this.setState({
+            tournaments: this.organization.getTournaments(),
+        });
+
+        //Subscription Check
+        let boo = this.profile.checkSubscription(this.name);
         if (boo){
             this.setState({
                 subscribed: true,
@@ -72,7 +82,7 @@ class OrganizationInfo extends Component {
                     <View>
                         <FlatList
                             data={this.state.tournaments}
-                            keyExtractor={(item,index) => index.toString()}
+                            nameExtractor={(item,index) => index.toString()}
                             renderItem={({item}) =>
                             <View style={{padding: 5, alignItems: 'center'}}> 
                                 <TouchableOpacity onPress={() => {this.onOrgPress(item)}}>

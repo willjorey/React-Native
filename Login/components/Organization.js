@@ -1,7 +1,10 @@
+import Tournament from './Tournament';
+
 export default class Organization{
-    constructor(name){
+    constructor(key,name){
+        this.key = key;
         this.name = name;
-        this.tournaments = [];
+        this.tournaments;
         this.num_subs = 0;
         this.color = '#1E90FF';
         this.banner= '';
@@ -10,8 +13,14 @@ export default class Organization{
     getName = () => {
         return this.name;
     };
+    setName = (name) => {
+        this.name = name;
+    };
     getSubCount = () => {
         return this.num_subs;
+    };
+    setTournaments = (tourn) => {
+        this.tournaments = tourn;
     };
     getTournaments = () => {
         return this.tournaments;
@@ -24,6 +33,24 @@ export default class Organization{
     };
     getBanner = () => {
         return this.banner;
+    }
+    setKey = (key) => {
+        this.key = key;
+    }
+    getKey = () => {
+        return this.key;
+    };
+
+    parseTournaments = () =>{
+        let tour = this.getTournaments()
+        let keys = Object.keys(tour);
+        let temp = [];
+        for (let i = 0; i < keys.length; i++){
+            let obj = tour[keys[i]];
+            let t = new Tournament(obj.name, obj.date);
+            temp.push(t);
+        };
+        this.tournaments = temp;
     }
  
 }

@@ -18,6 +18,7 @@ import { SearchBar } from 'react-native-elements'
 import Organization from '../components/Organization';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
+import {getOrgs} from '../db/services';
 
 import * as Actions from '../actions'; //Import your actions
 import Tournament from './Tournament';
@@ -28,32 +29,11 @@ class successfulLogin extends Component {
         this.list;
         this.state = {
             orgs: [],
-            query: '',
         };
     }
 
     componentDidMount = () => {
-        // GRAB ORGANIZATIONS FROM DATABASE
-        // DUMMY ORGANIZATIONS ARE TEMP HERE
-        let test = []
-        let z = new Organization("MUMBA");
-        z.setBanner('http://www.bladecreativebranding.com/blog/wp-content/uploads/2014/12/Toronto-Raptors-New-Logo-2014-Feature-Banner-NEW-800x412.png');
-        let x = new Organization("NBA");
-        x.setBanner('https://wallpaper-house.com/data/out/9/wallpaper2you_296628.jpg');
-        let y = new Tournament('Houseleague', '10-19-2018');
-        z.addTournament(y);
-        test.push(z);
-        test.push(x);
-        test.push(z);
-        test.push(x);
-        test.push(z);
-        test.push(x);
-        test.push(z);
-        test.push(x);
-        this.list = test;
-        this.setState({
-            orgs: test,
-        })
+        getOrgs(this);
     }
 
     onItem = (org) =>{
@@ -114,7 +94,6 @@ class successfulLogin extends Component {
                                 </View>
                                 }
                             />
-                            
                         </View>
                     </View>
                 </ScrollView> 
