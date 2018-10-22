@@ -12,6 +12,7 @@ import {
     Button,
 } from 'react-native';
 
+import { Icon } from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
@@ -25,7 +26,6 @@ class TournamentInfo extends Component {
         super(props);
         this.tournament = this.props.tournament;
         this.games = this.tournament.getGames()
-        // this.tournament.addGame(g);
         this.todayDate = new Date();
         this.todayStr = this.todayDate.toDateString();
 
@@ -37,7 +37,6 @@ class TournamentInfo extends Component {
         };
     }
     componentDidMount = () => {
-        // this.tournament.parseGames();
         this.getGamesByDate(this.todayDate.toDateString())
     }
     onPressDate = (input) =>{
@@ -76,7 +75,7 @@ class TournamentInfo extends Component {
 
         for (let key in obj){
             let val = obj[key];
-            let g = new Game(val.hName, val.aName, date);
+            let g = new Game(val.hName, val.aName, date, val.time);
             temp.push(g)
         }
         this.setState({
@@ -86,44 +85,47 @@ class TournamentInfo extends Component {
 
     render() {
         return (
-            <ScrollView>
-                <View style={styles.container}>
-                    <View style={{backgroundColor:'black', height:40, alignItems:'center', justifyContent:'center'}}>
-                        <View style={{flexDirection:'row'}}>
-                            <Button title="left" onPress={() => {this.onPressDate('left')}}/>
+            <View style={StyleSheet.absoluteFill}>
+                <View style={{flexDirection:'row', backgroundColor:'black', height:40, alignItems:'center', justifyContent:'center'}}>
+                    <Icon containerStyle={{right:30}} size={50} name='chevron-left'color='white' onPress={() => {this.onPressDate('left')}} />
+                        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                             <Text style={{color:'white'}}>{this.state.dateStr}</Text>
-                            <Button title="right" onPress={() => {this.onPressDate('right')}}/>
                         </View>
-                    </View>
-                    <FlatList
-                            data={this.state.games}
-                            keyExtractor={(item,index) => index.toString()}
-                            renderItem={({item}) =>
-                            <View style={{padding: 5, alignItems: 'center'}}>
-                                <TouchableOpacity>
-                                    <View style={styles.orgItem}>
-                                            <View style={styles.textBox}>
-                                                <Text>{item.getDate()}</Text>
-                                                <View style={styles.gameInfo}>
-                                                    <View style= {{padding: 20}}>
-                                                        <Text style={styles.text}>{item.getHomeName()}</Text>
-                                                    </View>
-                                                        <Text style={styles.text}>{item.getHomeScore()}</Text>
-                                                        <Text style={{fontSize: 10, fontWeight: 'bold', padding: 10}}> FINAL </Text>
-                                                        <Text style={styles.text}>{item.getAwayScore()}</Text>
+                    <Icon containerStyle={{left:30}} size={50} name='chevron-right'color='white' onPress={() => {this.onPressDate('right')}} />
+                </View>
+                <ScrollView>
+                    <View style={styles.container}>
 
-                                                    <View style= {{padding: 20}}>
-                                                        <Text style={styles.text}>{item.getAwayName()}</Text>
+                        <FlatList
+                                data={this.state.games}
+                                keyExtractor={(item,index) => index.toString()}
+                                renderItem={({item}) =>
+                                <View style={{padding: 5, alignItems: 'center'}}>
+                                    <TouchableOpacity>
+                                        <View style={styles.orgItem}>
+                                                <View style={styles.textBox}>
+                                                    <Text>{item.getTime()}</Text>
+                                                    <View style={styles.gameInfo}>
+                                                        <View style= {{padding: 20}}>
+                                                            <Text style={styles.text}>{item.getHomeName()}</Text>
+                                                        </View>
+                                                            <Text style={styles.text}>{item.getHomeScore()}</Text>
+                                                            <Text style={{fontSize: 10, fontWeight: 'bold', padding: 10}}> FINAL </Text>
+                                                            <Text style={styles.text}>{item.getAwayScore()}</Text>
+
+                                                        <View style= {{padding: 20}}>
+                                                            <Text style={styles.text}>{item.getAwayName()}</Text>
+                                                        </View>
                                                     </View>
                                                 </View>
-                                            </View>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            }
-                        />
-                </View>
-            </ScrollView> 
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                                }
+                            />
+                    </View>
+                </ScrollView> 
+            </View>
         );
     }
 
@@ -193,5 +195,5 @@ const styles = StyleSheet.create({
     },
     logoutText:{
         color: 'white'
-    }
+    },
   });

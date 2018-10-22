@@ -13,7 +13,7 @@ import {
     ScrollView,
 } from 'react-native';
 
-import { SearchBar } from 'react-native-elements'
+import { SearchBar, } from 'react-native-elements'
 
 import Organization from '../components/Organization';
 import {bindActionCreators} from 'redux';

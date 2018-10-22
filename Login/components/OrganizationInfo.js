@@ -17,6 +17,8 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../actions'; //Import your actions
 
+const SUBSCRIBE = 'Subscribe';
+const SUBBED = 'Subscribed'
 
 class OrganizationInfo extends Component {
     constructor(props) {
@@ -28,7 +30,7 @@ class OrganizationInfo extends Component {
         this.state = {
             tournaments: [],
             subscribed: false,
-            subText: "Subscribe",
+            subText: SUBSCRIBE,
         };
         this.profile = this.props.profile;
         
@@ -45,7 +47,7 @@ class OrganizationInfo extends Component {
         if (boo){
             this.setState({
                 subscribed: true,
-                subText: 'Subscribed'
+                subText: SUBBED,
             });
         };
     }
@@ -59,48 +61,53 @@ class OrganizationInfo extends Component {
             ToastAndroid.showWithGravityAndOffset('You are now Subscribed',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
             this.setState({
                 subscribed:true,
-                subText: 'Subscribed'
+                subText: SUBBED,
             })
         }
     }
 
     onOrgPress = (tourn) => {
-        this.props.navigation.navigate('Tournament', {tournament: tourn})
+        if (this.state.subscribed === true){
+            this.props.navigation.navigate('Tournament', {tournament: tourn})
+        }else{
+            ToastAndroid.showWithGravityAndOffset('Subscribed Members Only',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
+        }
     }
     render() {
         return (
-            <ScrollView>
-                <View style={styles.container}>
-                    <View style={styles.bannerBox}>
-                        <ImageBackground source={{uri: this.organization.getBanner()}} style={styles.bannerImage}>
-                            <TouchableOpacity style={styles.subButton} onPress={() => {this.subscribe()}}>
-                                <Text style={styles.subText}>{this.state.subText}</Text>
-                            </TouchableOpacity>
-                        </ImageBackground>
-                    </View>
-
-                    <View>
-                        <FlatList
-                            data={this.state.tournaments}
-                            nameExtractor={(item,index) => index.toString()}
-                            renderItem={({item}) =>
-                            <View style={{padding: 5, alignItems: 'center'}}> 
-                                <TouchableOpacity onPress={() => {this.onOrgPress(item)}}>
-                                    <View style={styles.orgItem}>
-                                        <ImageBackground source={require('../assets/logo.png')} style={{height:'100%', width: '100%',}}>
-                                            <View style={styles.textBox}>
-                                                <Text style={styles.text}>{item.getName()}</Text>
-                                            </View>
-                                        </ImageBackground>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            }
-                        />
-                    </View>
-                    
+            <View style={StyleSheet.absoluteFill}>
+                <View style={styles.bannerBox}>
+                    <ImageBackground source={{uri: this.organization.getBanner()}} style={styles.bannerImage}>
+                        <TouchableOpacity style={styles.subButton} onPress={() => {this.subscribe()}}>
+                            <Text style={styles.subText}>{this.state.subText}</Text>
+                        </TouchableOpacity>
+                    </ImageBackground>
                 </View>
-            </ScrollView> 
+                <ScrollView>
+                    <View style={styles.container}>
+                        <View>
+                            <FlatList
+                                data={this.state.tournaments}
+                                keyExtractor={(item,index) => index.toString()}
+                                renderItem={({item}) =>
+                                <View style={{padding: 5, alignItems: 'center'}}> 
+                                    <TouchableOpacity onPress={() => {this.onOrgPress(item)}}>
+                                        <View style={styles.orgItem}>
+                                            <ImageBackground source={require('../assets/logo.png')} style={{height:'100%', width: '100%',}}>
+                                                <View style={styles.textBox}>
+                                                    <Text style={styles.text}>{item.getName()}</Text>
+                                                </View>
+                                            </ImageBackground>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                                }
+                            />
+                        </View>
+                        
+                    </View>
+                </ScrollView> 
+            </View>
         );
     }
 
@@ -138,7 +145,6 @@ const styles = StyleSheet.create({
     bannerImage:{
         width: 430,
         height: 200,
-        bottom: 30,
     },
     textBox:{
         backgroundColor: 'black',
