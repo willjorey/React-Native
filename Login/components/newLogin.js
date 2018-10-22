@@ -8,8 +8,9 @@ import {
     TextInput,
     TouchableOpacity,
     ToastAndroid,
+    KeyboardAvoidingView
 } from 'react-native';
-import firebase from 'firebase';
+
 
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
@@ -75,50 +76,49 @@ class newLogin extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView keyboardVerticalOffset={5} behavior="position" style={styles.container}>
+                <View style={{marginTop:50}}>
+                    <View style={{padding:10}}>
+                        <Text style={styles.textHeader}>Name</Text>
+                        <View style={styles.loginContainer}>
+                            <TextInput underlineColorAndroid="transparent" value={this.state.name} onChangeText={(value) => {this.setState({name: value})}}/>
+                        </View>
+                    </View>
 
-                <View style={{padding:10}}>
-                    <Text style={styles.textHeader}>Name</Text>
-                    <View style={styles.loginContainer}>
-                        <TextInput underlineColorAndroid="transparent" value={this.state.name} onChangeText={(value) => {this.setState({name: value})}}/>
+                    <View style={{padding:10}}>
+                        <Text style={styles.textHeader}>E-mail</Text>
+                        <View style={styles.loginContainer}>
+                            <TextInput underlineColorAndroid="transparent" value={this.state.email} onChangeText={(value) => {this.setState({email: value})}}/>
+                        </View>
+                    </View>
+                    <View style={{padding:10}}>
+                        <Text style={styles.textHeader}>Enter Username</Text>
+                        <View style={styles.loginContainer}>
+                            <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
+                        </View>
+                    </View>
+
+                    <View style={{padding:10}}>
+                        <Text style={styles.textHeader}>Password</Text>
+                        <View style={styles.loginContainer}>
+                            <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
+                        </View>
+                    </View>
+
+                    <View style={{padding:10}}>
+                        <Text style={styles.textHeader}>Re-Type Password</Text>
+                        <View style={styles.loginContainer}>
+                            <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.re_pass} onChangeText={(value) => {this.setState({re_pass: value})}}/>
+                        </View>
+                    </View>
+
+                    <View style={{padding: 5, alignItems:'center'}}>
+                        <TouchableOpacity style={styles.signupButton} onPress={() => {this.createLogin()}}>
+                            <Text style={styles.buttonText}>Sign Up</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-
-                <View style={{padding:10}}>
-                    <Text style={styles.textHeader}>E-mail</Text>
-                    <View style={styles.loginContainer}>
-                        <TextInput underlineColorAndroid="transparent" value={this.state.email} onChangeText={(value) => {this.setState({email: value})}}/>
-                    </View>
-                </View>
-                <View style={{padding:10}}>
-                    <Text style={styles.textHeader}>Enter Username</Text>
-                    <View style={styles.loginContainer}>
-                        <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
-                    </View>
-                </View>
-
-                <View style={{padding:10}}>
-                    <Text style={styles.textHeader}>Password</Text>
-                    <View style={styles.loginContainer}>
-                        <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.pass} onChangeText={(value) => {this.setPassword(value)}}/>
-                    </View>
-                </View>
-
-                <View style={{padding:10}}>
-                    <Text style={styles.textHeader}>Re-Type Password</Text>
-                    <View style={styles.loginContainer}>
-                        <TextInput secureTextEntry={true} underlineColorAndroid="transparent" value={this.state.re_pass} onChangeText={(value) => {this.setState({re_pass: value})}}/>
-                    </View>
-                </View>
-
-
-                <View style={{padding: 5,}}>
-                    <TouchableOpacity style={styles.signupButton} onPress={() => {this.createLogin()}}>
-                        <Text style={styles.buttonText}>Sign Up</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 
@@ -150,7 +150,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(newLogin);
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        marginTop:30,
     },
     textHeader: {
         color: '#1E90FF',
@@ -181,6 +180,6 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         borderWidth: 2,
         borderColor: '#1E90FF',
-        top:100,
+        top:0,
     },
   });

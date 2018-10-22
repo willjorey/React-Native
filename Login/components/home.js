@@ -10,6 +10,7 @@ import {
     ToastAndroid,
     TouchableOpacity,
     TouchableHighlight,
+    KeyboardAvoidingView,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
@@ -78,8 +79,8 @@ class Home extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <TouchableHighlight style={{top:80}}underlayColor='transparent' onPress={()=> {this.props.navigation.navigate('Title')}}>
+            <KeyboardAvoidingView keyboardVerticalOffset={-150} behavior='position'style={styles.container}>
+                <TouchableHighlight style={{top:80, alignItems:'center'}}underlayColor='transparent' onPress={()=> {this.props.navigation.navigate('Title')}}>
                     <Image source={require('../assets/logo.png')} style={{height:200, width: 200,}} />
                 </TouchableHighlight>
                 <View style={styles.loginContainer}>
@@ -99,14 +100,14 @@ class Home extends Component {
                 </View>
  
                 <View style={styles.buttonContainer}>
-                    <View style={{padding: 5,}}>
+                    <View style={{padding: 5, alignItems:'center'}}>
                         <TouchableOpacity style={styles.loginButton} onPress={() => {this.onPressButton()}}>
                             <Text style={styles.buttonText}>Login</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 
@@ -138,8 +139,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 const styles = StyleSheet.create({
     container: {
-      marginTop:30,
-      alignItems:'center',
+        flex:1,
+        marginTop:30,
+        alignItems:'center',
 
     },
     title: {
