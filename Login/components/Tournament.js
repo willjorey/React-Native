@@ -1,3 +1,5 @@
+import Game from "./Game";
+
 export default class Tournament{
     constructor(name, date){
         this.name = name;
@@ -13,7 +15,7 @@ export default class Tournament{
     getGames = () => {
         return this.games;
     };
-    addGame = (game) => {
-        this.getGames().push(game);
-    }
+    setGames = (game) => {
+        this.games = game;
+    };
 }

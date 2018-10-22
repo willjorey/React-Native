@@ -8,17 +8,14 @@ import {
     ToastAndroid,
     FlatList,
     TouchableOpacity,
-    Image,
-    ImageBackground,
     ScrollView,
+    Button,
 } from 'react-native';
 
-import Organization from '../components/Organization';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
-import Tournament from './Tournament';
 import Game from './Game';
 
 const g = new Game('Raptors', 'Cavaliers', '10-17-2018');
@@ -27,23 +24,82 @@ class TournamentInfo extends Component {
     constructor(props) {
         super(props);
         this.tournament = this.props.tournament;
-        this.tournament.addGame(g);
+        this.games = this.tournament.getGames()
+        // this.tournament.addGame(g);
+        this.todayDate = new Date();
+        this.todayStr = this.todayDate.toDateString();
 
         this.state = {
-            games: this.tournament.getGames(),
+            games: [],
             msg: 'No Tournaments Available',
+            dateStr: 'Today',
+            date: this.todayDate,
         };
+    }
+    componentDidMount = () => {
+        // this.tournament.parseGames();
+        this.getGamesByDate(this.todayDate.toDateString())
+    }
+    onPressDate = (input) =>{
+        let d = this.state.date;
+
+        if (input === 'left'){
+            d.setDate( d.getDate() - 1);
+        }else{
+            d.setDate( d.getDate() + 1);
+        }
+        if(d.toDateString() === this.todayStr){
+            this.setState({
+                dateStr: 'Today',
+                date:d
+            });
+        }else{
+            this.setState({
+                dateStr: d.toDateString(),
+                date:d
+            });
+        }
+
+        this.getGamesByDate(d.toDateString())
+    };
+
+    getGamesByDate = (date) => {
+        let temp = [];
+        let obj;
+        for (let key in this.games){
+            if( key === date){
+                obj = this.games[key]
+                date = key;
+                break;
+            }
+        }
+
+        for (let key in obj){
+            let val = obj[key];
+            let g = new Game(val.hName, val.aName, date);
+            temp.push(g)
+        }
+        this.setState({
+            games: temp,
+        })
     }
 
     render() {
         return (
             <ScrollView>
                 <View style={styles.container}>
+                    <View style={{backgroundColor:'black', height:40, alignItems:'center', justifyContent:'center'}}>
+                        <View style={{flexDirection:'row'}}>
+                            <Button title="left" onPress={() => {this.onPressDate('left')}}/>
+                            <Text style={{color:'white'}}>{this.state.dateStr}</Text>
+                            <Button title="right" onPress={() => {this.onPressDate('right')}}/>
+                        </View>
+                    </View>
                     <FlatList
                             data={this.state.games}
                             keyExtractor={(item,index) => index.toString()}
                             renderItem={({item}) =>
-                            <View style={{padding: 5, alignItems: 'center'}}> 
+                            <View style={{padding: 5, alignItems: 'center'}}>
                                 <TouchableOpacity>
                                     <View style={styles.orgItem}>
                                             <View style={styles.textBox}>

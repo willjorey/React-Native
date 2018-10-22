@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     ToastAndroid,
 } from 'react-native';
+import firebase from 'firebase';
 
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
@@ -57,7 +58,6 @@ class newLogin extends Component {
                     let p = new Profile(this.state.name, this.state.email, this.state.user, this.state.pass);
                     this.async.storeLogin(p);
                     ToastAndroid.showWithGravityAndOffset('Login Created',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
-                    
                     this.props.navigation.navigate('Login'); 
 
                 }else{
