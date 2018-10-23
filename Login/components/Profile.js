@@ -1,5 +1,9 @@
+const ADMIN = 'ADMIN';
+const USER = 'USER';
+
 export default class Profile{
     constructor(name,email, username, password){
+        this.role;
         this.name = name;
         this.email = email;
         this.username = username;
@@ -7,6 +11,9 @@ export default class Profile{
         this.subscriptions = [];
     }
 
+    getRole = () => {
+        return this.role;
+    }
     getEmail = () => {
         return this.email;
     }

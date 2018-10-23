@@ -52,25 +52,27 @@ class Home extends Component {
     validateLogin = (email, pass) =>{
         let that = this;
         // Firebase Login Authentication
-        try {
-            firebase.auth().signInWithEmailAndPassword(email, pass).then(function(user){
-                //Retrieve profile saved on phone
-                that.async.getLogin(email).then( (value) => {
-                    //Parse and create the profile object
-                    let obj = JSON.parse(value);
-                    let profile = new Profile();
-                    profile.copyObj(obj);
+        firebase.auth().signInWithEmailAndPassword(email, pass).then(function(user){
+            //Retrieve profile saved on phone
+            that.async.getLogin(email).then( (value) => {
+                //Parse and create the profile object
+                let obj = JSON.parse(value);
+                let profile = new Profile();
+                profile.copyObj(obj);
 
-                    //Set the profile state in Redux to be used throughout application
-                    that.props.setProfile(profile);
-                    //Navigate to Main screen
-                    that.props.navigation.navigate('Main');
-                
-                });
-            })
-        } catch(error) {
-            ToastAndroid.showWithGravityAndOffset( 'Incorrect Login',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
-        }
+                //Set the profile state in Redux to be used throughout application
+                that.props.setProfile(profile);
+                //Navigate to Main screen
+                that.props.navigation.navigate('Main');
+            
+            });
+        }).catch((error) => {
+            if (error.code === 'auth/invalid-email')
+                ToastAndroid.showWithGravityAndOffset( 'Invalid E-mail',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
+            
+            if(error.code === 'auth/wrong-password')
+                ToastAndroid.showWithGravityAndOffset( 'Incorrect Password',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
+        });
     }
     onPressButton = () => {
         this.validateLogin(this.state.email, this.state.pass);

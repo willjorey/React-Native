@@ -35,7 +35,7 @@ const DrawerComponent = (props) => {
         <ScrollView>
             <DrawerItems {...props}/>
         </ScrollView>
-        <TouchableOpacity style={{alignItems:'center', padding: 10, backgroundColor:'#1E90FF'}}onPress={() => {this.logout()}}>
+        <TouchableOpacity style={{alignItems:'center', padding: 10, backgroundColor:'#1E90FF'}}onPress={this.logout}>
             <Text style={{fontSize:15, fontWeight:'bold', color:"white"}}>Logout</Text>
         </TouchableOpacity>    
     </SafeAreaView>
@@ -97,7 +97,4 @@ const mapStateToProps = state => ({
     navigation: state.navigation,
   });
 
-  function mapDispatchToProps(dispatch) {
-    return bindActionCreators(Actions, dispatch);
-}  
-export default connect(mapStateToProps, mapDispatchToProps)(Nav)
+export default connect(mapStateToProps)(Nav)

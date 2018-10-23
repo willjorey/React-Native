@@ -58,12 +58,18 @@ class newLogin extends Component {
             if(this.state.pass === this.state.re_pass){
 
                 if(this.state.pass.length > 3){
-                    let p = new Profile(this.state.name, this.state.email, this.state.user, this.state.pass);
-                    this.async.storeLogin(p);
-                    ToastAndroid.showWithGravityAndOffset('Login Created',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
                     //Save user to firebase
-                    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass);
-                    this.props.navigation.navigate('Login'); 
+                    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass).then( () => {
+                        let p = new Profile(this.state.name, this.state.email, this.state.user, this.state.pass);
+                        this.async.storeLogin(p);
+                        ToastAndroid.showWithGravityAndOffset('Login Created',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
+                        this.props.navigation.navigate('Login'); 
+                    }).catch((error) => {
+                        if(error.code === 'auth/email-already-in-use')
+                            ToastAndroid.showWithGravityAndOffset('E-mail already in use',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
+                        console.log(error.code);
+                    });
+
 
                 }else{
                     ToastAndroid.showWithGravityAndOffset('Password is too short', ToastAndroid.LONG,ToastAndroid.TOP,25,50);
@@ -135,9 +141,6 @@ class newLogin extends Component {
 // This function makes Redux know that this component needs to be passed a piece of the state
 function mapStateToProps(state, props) {
     return {
-        username: state.loginReducer.username,
-        password: state.loginReducer.password,
-        login: state.loginReducer.login,
     }
 }
 
