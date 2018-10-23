@@ -21,14 +21,14 @@ class mySubscriptions extends Component {
     constructor(props) {
         super(props);
         this.profile = this.props.profile;
-        this.subKeys = this.profile.getSubscriptions();
+        this.subs = this.profile.getSubscriptions();
         this.state = {
             subs: [],
         };
     }
     //Grab the profiles subscribed organization.
     componentDidMount = () => {
-        getOrgsByKey(this, this.subKeys);
+        getOrgsByKey(this, this.subs);
     }
 
     //Navigate to desired Organization pressed

@@ -81,13 +81,13 @@ export const getTournamentGamesBy_Key = (that,key) =>{
 
 }
 
-export const getOrgsByKey = (that, keys) => {
+export const getOrgsByKey = (that, subs) => {
     let temp = [];
-    //for each organization key in keys, create an Organization obj and add to a list to be shown.
-    for (let i = 0; i < keys.length; i++){
-        db.ref('/v1/Organizations/' + keys[i]).on("value", function(snapshot) {
+    //for each organization key in subs, create an Organization obj and add to a list to be shown.
+    for (let i = 0; i < subs.length; i++){
+        db.ref('/v1/Organizations/' + subs[i].getKey()).on("value", function(snapshot) {
             let obj = snapshot.val();
-            let org = new Organization(keys[i], obj.name);
+            let org = new Organization(subs[i].getKey(), obj.name);
             org.setTournaments(obj.Tournaments);
             org.setBanner(obj.banner);
             temp.push(org);

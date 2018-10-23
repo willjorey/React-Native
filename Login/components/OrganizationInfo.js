@@ -16,6 +16,7 @@ import {
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../actions'; //Import your actions
+import Subscription from './Subscription';
 
 const SUBSCRIBE = 'Subscribe';
 const SUBBED = 'Subscribed'
@@ -62,7 +63,9 @@ class OrganizationInfo extends Component {
         if (this.state.subscribed){
             ToastAndroid.showWithGravityAndOffset('Already Subscribed',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
         }else{
-            this.props.profile.addSubscription(this.key);
+            let sub = new Subscription(this.key, new Date);
+            console.log(sub)
+            this.props.profile.addSubscription(sub);
             this.props.setProfile(this.profile);
             ToastAndroid.showWithGravityAndOffset('You are now Subscribed',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
             this.setState({

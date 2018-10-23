@@ -50,7 +50,7 @@ export default class Profile{
 
     checkSubscription = (key) =>{
         for (let i = 0; i < this.getSubscriptions().length; i ++){
-            if (key === this.getSubscriptions()[i])
+            if (key === this.getSubscriptions()[i].getKey())
                 return true;
         }
         return false;
