@@ -8,9 +8,7 @@ import {
     FlatList,
     TouchableOpacity,
     ImageBackground,
-    Image,
     ScrollView,
-    ToastAndroid,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
@@ -28,9 +26,12 @@ class mySubscriptions extends Component {
             subs: [],
         };
     }
+    //Grab the profiles subscribed organization.
     componentDidMount = () => {
         getOrgsByKey(this, this.subKeys);
     }
+
+    //Navigate to desired Organization pressed
     onPressSub = (org) => {
         this.props.navigation.navigate('Organization',{organization: org});
     }
