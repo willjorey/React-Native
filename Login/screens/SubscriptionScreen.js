@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import Subs from '../components/mySubscriptions';
 import OrganizationScreen from './OrganizationScreen';
+import TournamentScreen from './TournamentScreen';
 import { createStackNavigator } from 'react-navigation';
 
 class SubscriptionScreen extends Component {
@@ -31,4 +32,13 @@ export default new createStackNavigator({
         }
       }
     },
+    Tournament:{
+      screen: TournamentScreen,
+      navigationOptions:{
+        headerTintColor: 'white',
+        headerStyle:{
+        backgroundColor: 'black'
+        }
+      }
+    }
   })

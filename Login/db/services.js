@@ -61,19 +61,22 @@ export const getTournamentGamesBy_Key = (that,key) =>{
         for (let key in obj){
             if (key === that.todayStr){
                 temp = obj[key];
+            }else{
+                temp = false
             }
         };
 
-        let list = [];
-        for (let key in temp){
-            let game = temp[key];
-            let g = new Game(game.hName, game.aName, game.time);
-            list.push(g);
-        };
-        that.setState({
-            games: list
-        })
-        
+        if (typeof temp === 'object'){
+            let list = [];
+            for (let key in temp){
+                let game = temp[key];
+                let g = new Game(game.hName, game.aName, game.time);
+                list.push(g);
+            };
+            that.setState({
+                games: list
+            })
+        }
     });
 
 }
@@ -93,4 +96,5 @@ export const getOrgsByKey = (that, keys) => {
     that.setState({
         subs: temp,
     })
+    console.log(temp)
 };
