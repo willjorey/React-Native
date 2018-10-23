@@ -19,6 +19,8 @@ import * as Actions from '../actions'; //Import your actions
 import Async from '../components/Async';
 import Profile from '../components/Profile';
 
+import * as firebase from 'firebase';
+
 class newLogin extends Component {
     constructor(props) {
         super(props);
@@ -59,6 +61,8 @@ class newLogin extends Component {
                     let p = new Profile(this.state.name, this.state.email, this.state.user, this.state.pass);
                     this.async.storeLogin(p);
                     ToastAndroid.showWithGravityAndOffset('Login Created',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
+                    //Save user to firebase
+                    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass);
                     this.props.navigation.navigate('Login'); 
 
                 }else{

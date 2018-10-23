@@ -7,6 +7,10 @@ export default class Profile{
         this.subscriptions = [];
     }
 
+    getEmail = () => {
+        return this.email;
+    }
+
     getUsername = () => {
         return this.username;
     }

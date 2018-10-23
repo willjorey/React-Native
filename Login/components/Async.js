@@ -4,10 +4,9 @@ export default class Async{
 
     }
     storeLogin = async (profile) => {
-        let user = profile.getUsername();
-        let pass = profile.getPassword();
+        let email = profile.getEmail();
         try {
-          return await AsyncStorage.setItem(user + pass, JSON.stringify(profile));
+          return await AsyncStorage.setItem(email, JSON.stringify(profile));
         } catch (error) {
           // Error saving data
         }

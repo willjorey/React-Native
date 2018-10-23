@@ -1,6 +1,4 @@
 export const DATA_AVAILABLE = 'DATA_AVAILABLE';
-export const SET_LOGIN = 'SET_LOGIN';
-export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SET_PROFILE = 'SET_PROFILE';
 export const LOGOUT_PROFILE = 'LOGOUT_PROFILE';
@@ -23,25 +21,6 @@ export const ADD_SUB = 'ADD_SUB';
 //     };
 // };
 
-export function getLogin(){
-    return (dispatch) => {
-        let user = 'username';
-        let pass = 'password';
-        dispatch({type: SET_LOGIN, username: user, password: pass});
-    };
-};
-
-export function Login(){
-    return (dispatch) => {
-        dispatch({type: LOGIN});
-    };
-};
-
-export function setLogin(user, pass){
-    return (dispatch) => {
-        dispatch({type: SET_LOGIN, username: user, password: pass});
-    };
-};
 
 export function logout(){
     return (dispatch) => {

@@ -20,12 +20,14 @@ import * as Actions from '../actions'; //Import your actions
 import Async from './Async';
 import Profile from './Profile';
 
+import * as firebase from 'firebase';
+
 class Home extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: "",
+            email: "",
             pass: "",
         };
         this.async = new Async();
@@ -37,7 +39,7 @@ class Home extends Component {
 
     setUsername = (value) =>{
         this.setState({
-            user: value,
+            email: value,
         });
     };
     setPassword = (value) =>{
@@ -47,33 +49,31 @@ class Home extends Component {
 
     };
 
-    validateLogin = (key) =>{
+    validateLogin = (email, pass) =>{
         let that = this;
-        //Check if the login exists: If so change state of loginReducer
-        this.async.getLogin(key).then( (value) => {
-            if (value !== null){
-                let obj = JSON.parse(value);
-                let profile = new Profile();
-                profile.copyObj(obj);
+        // Firebase Login Authentication
+        try {
+            firebase.auth().signInWithEmailAndPassword(email, pass).then(function(user){
+                //Retrieve profile saved on phone
+                that.async.getLogin(email).then( (value) => {
+                    //Parse and create the profile object
+                    let obj = JSON.parse(value);
+                    let profile = new Profile();
+                    profile.copyObj(obj);
 
-                that.props.Login();
-                that.props.setLogin(that.state.user,that.state.pass);
-                that.props.setProfile(profile);
-                that.props.navigation.navigate('Main');
-            }else{
-                ToastAndroid.showWithGravityAndOffset(
-                    'Incorrect Login',
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
-                    25,
-                    50
-                  );
-                console.log("Incorrect Login");
-            }
-        });
+                    //Set the profile state in Redux to be used throughout application
+                    that.props.setProfile(profile);
+                    //Navigate to Main screen
+                    that.props.navigation.navigate('Main');
+                
+                });
+            })
+        } catch(error) {
+            ToastAndroid.showWithGravityAndOffset( 'Incorrect Login',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
+        }
     }
     onPressButton = () => {
-        this.validateLogin(this.state.user + this.state.pass);
+        this.validateLogin(this.state.email, this.state.pass);
 
     }
 
@@ -85,9 +85,9 @@ class Home extends Component {
                 </TouchableHighlight>
                 <View style={styles.loginContainer}>
                     <View style={{padding:10}}>
-                        <Text style={styles.text}>Username</Text>
+                        <Text style={styles.text}>E-Mail</Text>
                         <View style={styles.login}>
-                            <TextInput style={styles.input} underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
+                            <TextInput style={styles.input} underlineColorAndroid="transparent" value={this.state.email} onChangeText={(value) => {this.setUsername(value)}}/>
                         </View>
                     </View>
 
@@ -120,9 +120,6 @@ class Home extends Component {
 // This function makes Redux know that this component needs to be passed a piece of the state
 function mapStateToProps(state, props) {
     return {
-        username: state.loginReducer.username,
-        password: state.loginReducer.password,
-        login: state.loginReducer.login,
         profile: state.profileReducer.profile,
     }
 }
