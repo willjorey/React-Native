@@ -26,20 +26,26 @@ import Tournament from './Tournament';
 class successfulLogin extends Component {
     constructor(props) {
         super(props);
+        //original organization list
+
         this.list;
+        //changing list to display
         this.state = {
             orgs: [],
         };
     }
 
     componentDidMount = () => {
+        //Fetch organizations from database
         getOrgs(this);
     }
 
     onItem = (org) =>{
+        //Navigate to Organization info screen
         this.props.navigation.navigate('Organization',{organization: org});
     }
 
+    //Filter the original list to match the search query
     onSearch = (value) => {
         let temp = [];
         if( value.length !== 0 ){
@@ -52,7 +58,7 @@ class successfulLogin extends Component {
                 this.setState({
                     orgs: temp
                 })
-            };
+            }
         }else{
             this.setState({
                 orgs: this.list
