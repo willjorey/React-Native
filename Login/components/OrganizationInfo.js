@@ -27,6 +27,7 @@ class OrganizationInfo extends Component {
         this.key = this.organization.getKey();
 
         this.name = this.organization.name;
+        
         this.state = {
             tournaments: [],
             subscribed: false,
@@ -36,12 +37,16 @@ class OrganizationInfo extends Component {
         
     }
     componentDidMount = () =>{
-        //Parse and Get tournaments because we want the tournaments in a list of objects not objects
-        this.organization.parseTournaments();
+         //Parse Organizations tournaments iff it is an object
+        if (Array.isArray(this.organization.getTournaments())){
+            console.log("LIST")
+        }else{
+            this.organization.parseTournaments();
+        }
         this.setState({
             tournaments: this.organization.getTournaments(),
         });
-
+        
         //Subscription Check
         let boo = this.profile.checkSubscription(this.key);
         if (boo){

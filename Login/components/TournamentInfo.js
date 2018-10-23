@@ -38,6 +38,7 @@ class TournamentInfo extends Component {
     componentDidMount = () => {
         //Fetch all the Games in that tournament, And grab todays date games
         getTournamentGamesBy_Key(this ,this.key);
+
     }
     onPressDate = (input) =>{
         let d = this.state.date;
