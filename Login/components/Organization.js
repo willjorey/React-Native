@@ -40,18 +40,15 @@ export default class Organization{
     getKey = () => {
         return this.key;
     };
-
+    
     parseTournaments = () =>{
         let tour = this.getTournaments()
-        let keys = Object.keys(tour);
         let temp = [];
-        for (let i = 0; i < keys.length; i++){
-            let obj = tour[keys[i]];
-            let t = new Tournament(obj.name, obj.date);
-            t.setGames(obj['games'])
+        for (let key in tour){
+            let obj = tour[key];
+            let t = new Tournament(obj.name, obj.date, key);
             temp.push(t);
         };
         this.tournaments = temp;
     }
- 
 }

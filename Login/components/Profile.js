@@ -37,9 +37,9 @@ export default class Profile{
         this.subscriptions = obj.subscriptions;
     };
 
-    checkSubscription = (sub) =>{
+    checkSubscription = (key) =>{
         for (let i = 0; i < this.getSubscriptions().length; i ++){
-            if (sub === this.getSubscriptions()[i].name)
+            if (key === this.getSubscriptions()[i])
                 return true;
         }
         return false;

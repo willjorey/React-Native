@@ -1,7 +1,8 @@
 import Game from "./Game";
 
 export default class Tournament{
-    constructor(name, date){
+    constructor(name, date, key){
+        this.key = key;
         this.name = name;
         this.date = date;
         this.games = [];
@@ -18,4 +19,7 @@ export default class Tournament{
     setGames = (game) => {
         this.games = game;
     };
+    getKey = () => {
+        return this.key;
+    }
 }

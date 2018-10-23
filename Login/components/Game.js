@@ -2,10 +2,10 @@ const STATUS_IN_PROGRESS = 'In Progress';
 const STATUS_FINAL = 'Final';
 
 export default class Game{
-    constructor(home, away, date, time){
+    constructor(home, away, time){
         this.hscore = 0;
         this.ascore = 0;
-        this.date = date;
+        this.date = '';
         this.hname = home;
         this.aname = away;
         this.time = time;

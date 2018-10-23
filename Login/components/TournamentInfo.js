@@ -18,26 +18,26 @@ import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
 import Game from './Game';
-
+import {getTournamentGamesBy_Key} from '../db/services';
 const g = new Game('Raptors', 'Cavaliers', '10-17-2018');
 
 class TournamentInfo extends Component {
     constructor(props) {
         super(props);
         this.tournament = this.props.tournament;
-        this.games = this.tournament.getGames()
+        this.key = this.tournament.getKey();
         this.todayDate = new Date();
         this.todayStr = this.todayDate.toDateString();
 
         this.state = {
             games: [],
-            msg: 'No Tournaments Available',
             dateStr: 'Today',
             date: this.todayDate,
         };
     }
     componentDidMount = () => {
-        this.getGamesByDate(this.todayDate.toDateString())
+        //Fetch all the Games in that tournament, And grab todays date games
+        getTournamentGamesBy_Key(this ,this.key);
     }
     onPressDate = (input) =>{
         let d = this.state.date;
@@ -63,24 +63,25 @@ class TournamentInfo extends Component {
     };
 
     getGamesByDate = (date) => {
-        let temp = [];
-        let obj;
-        for (let key in this.games){
-            if( key === date){
-                obj = this.games[key]
-                date = key;
-                break;
-            }
-        }
 
+        let obj = this.tournament.getGames();
+        let temp;
         for (let key in obj){
-            let val = obj[key];
-            let g = new Game(val.hName, val.aName, date, val.time);
-            temp.push(g)
-        }
+            if (key === date){
+                temp = obj[key];
+            }
+        };
+
+        let list = [];
+        for (let key in temp){
+            let game = temp[key];
+            let g = new Game(game.hName, game.aName, game.time);
+            list.push(g);
+        };
         this.setState({
-            games: temp,
-        })
+            games: list
+        });
+        
     }
 
     render() {

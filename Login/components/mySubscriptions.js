@@ -17,13 +17,19 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../actions'; //Import your actions
 
+import { getOrgsByKey } from '../db/services';
+
 class mySubscriptions extends Component {
     constructor(props) {
         super(props);
         this.profile = this.props.profile;
+        this.subKeys = this.profile.getSubscriptions();
         this.state = {
-            subs: this.profile.getSubscriptions(),
+            subs: [],
         };
+    }
+    componentDidMount = () => {
+        getOrgsByKey(this, this.subKeys);
     }
     onPressSub = (org) => {
         this.props.navigation.navigate('Organization',{organization: org});

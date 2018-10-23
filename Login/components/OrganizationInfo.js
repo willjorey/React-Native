@@ -36,14 +36,14 @@ class OrganizationInfo extends Component {
         
     }
     componentDidMount = () =>{
-        //Parse and Get tournaments
+        //Parse and Get tournaments because we want the tournaments in a list of objects not objects
         this.organization.parseTournaments();
         this.setState({
             tournaments: this.organization.getTournaments(),
         });
 
         //Subscription Check
-        let boo = this.profile.checkSubscription(this.name);
+        let boo = this.profile.checkSubscription(this.key);
         if (boo){
             this.setState({
                 subscribed: true,
@@ -53,10 +53,11 @@ class OrganizationInfo extends Component {
     }
     
     subscribe = () => {
+        // Check if already subscribed, else subcribe by adding key to the profiles subscription list;
         if (this.state.subscribed){
             ToastAndroid.showWithGravityAndOffset('Already Subscribed',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
         }else{
-            this.props.profile.addSubscription(this.organization);
+            this.props.profile.addSubscription(this.key);
             this.props.setProfile(this.profile);
             ToastAndroid.showWithGravityAndOffset('You are now Subscribed',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
             this.setState({
@@ -66,6 +67,7 @@ class OrganizationInfo extends Component {
         }
     }
 
+    //Navigate to desired tournament pressed, only if user is subscribed
     onOrgPress = (tourn) => {
         if (this.state.subscribed === true){
             this.props.navigation.navigate('Tournament', {tournament: tourn})
