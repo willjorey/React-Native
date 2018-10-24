@@ -29,6 +29,8 @@ class TournamentInfo extends Component {
         this.todayDate = new Date();
         this.todayStr = this.todayDate.toDateString();
 
+        console.log(this.tournament)
+
         this.state = {
             games: [],
             dateStr: 'Today',
@@ -88,6 +90,10 @@ class TournamentInfo extends Component {
     render() {
         return (
             <View style={StyleSheet.absoluteFill}>
+                <View>
+                    <Text>Start Date: {this.tournament.getDate()}</Text>
+                    <Text>End Date: {this.tournament.getEnd()}</Text>
+                </View>
                 <View style={{flexDirection:'row', backgroundColor:'black', height:40, alignItems:'center', justifyContent:'center'}}>
                     <Icon containerStyle={{right:30}} size={50} name='chevron-left'color='white' onPress={() => {this.onPressDate('left')}} />
                         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>

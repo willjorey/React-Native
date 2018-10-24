@@ -47,6 +47,7 @@ export default class Organization{
         for (let key in tour){
             let obj = tour[key];
             let t = new Tournament(obj.name, obj.date, key);
+            t.setEnd(obj.end);
             temp.push(t);
         };
         this.tournaments = temp;

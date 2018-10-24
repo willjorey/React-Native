@@ -5,6 +5,7 @@ export default class Tournament{
         this.key = key;
         this.name = name;
         this.date = date;
+        this.end;
         this.games = [];
         this.location = '';
         this.banner = '';
@@ -21,5 +22,15 @@ export default class Tournament{
     };
     getKey = () => {
         return this.key;
+    };
+
+    getDate = () => {
+        return this.date;
+    };
+    setEnd = (end) => {
+        this.end = end
+    };
+    getEnd = () =>{
+        return this.end;
     }
 }

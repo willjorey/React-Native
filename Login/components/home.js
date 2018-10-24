@@ -67,6 +67,7 @@ class Home extends Component {
             
             });
         }).catch((error) => {
+            console.log(error.code);
             if (error.code === 'auth/invalid-email')
                 ToastAndroid.showWithGravityAndOffset( 'Invalid E-mail',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
             
