@@ -12,13 +12,14 @@ import {
     Button,
 } from 'react-native';
 
-import { Icon } from 'react-native-elements';
+import { Icon,} from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
 import Game from './Game';
-import {getTournamentGamesBy_Key} from '../db/services';
+import {fetchTournamentGamesBy_Date} from '../db/services';
+import CreateGame from './CreateGame';
 const g = new Game('Raptors', 'Cavaliers', '10-17-2018');
 
 class TournamentInfo extends Component {
@@ -29,18 +30,16 @@ class TournamentInfo extends Component {
         this.todayDate = new Date();
         this.todayStr = this.todayDate.toDateString();
 
-        console.log(this.tournament)
-
         this.state = {
             games: [],
             dateStr: 'Today',
             date: this.todayDate,
+            controls: false,
         };
     }
     componentDidMount = () => {
         //Fetch all the Games in that tournament, And grab todays date games
-        getTournamentGamesBy_Key(this ,this.key);
-
+        fetchTournamentGamesBy_Date(this, this.key, this.todayDate);
     }
     onPressDate = (input) =>{
         let d = this.state.date;
@@ -62,38 +61,40 @@ class TournamentInfo extends Component {
             });
         }
 
-        this.getGamesByDate(d.toDateString())
+        fetchTournamentGamesBy_Date(this, this.key, d.toDateString())
     };
 
-    getGamesByDate = (date) => {
-
-        let obj = this.tournament.getGames();
-        let temp;
-        for (let key in obj){
-            if (key === date){
-                temp = obj[key];
-            }
-        };
-
-        let list = [];
-        for (let key in temp){
-            let game = temp[key];
-            let g = new Game(game.hName, game.aName, game.time);
-            list.push(g);
-        };
+    controls = () => {
         this.setState({
-            games: list
+            controls: !this.state.controls,
         });
-        
     }
+
+    admin = () =>{
+
+        if (this.props.profile.getRole() === "ADMIN"){
+            return (
+                <View style = {{alignItems: 'center', justifyContent: 'center'}}>
+                    <TouchableOpacity style={styles.Button} onPress={this.controls}>
+                        <Text style={{color: 'white'}}>Show Admin controls</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+    };
+
 
     render() {
         return (
             <View style={StyleSheet.absoluteFill}>
-                <View>
+                {this.admin()}
+                {this.state.controls && <CreateGame tournament = {this.tournament} />}
+
+                <View style={{padding: 20}}>
                     <Text>Start Date: {this.tournament.getDate()}</Text>
                     <Text>End Date: {this.tournament.getEnd()}</Text>
                 </View>
+
                 <View style={{flexDirection:'row', backgroundColor:'black', height:40, alignItems:'center', justifyContent:'center'}}>
                     <Icon containerStyle={{right:30}} size={50} name='chevron-left'color='white' onPress={() => {this.onPressDate('left')}} />
                         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
@@ -101,6 +102,7 @@ class TournamentInfo extends Component {
                         </View>
                     <Icon containerStyle={{left:30}} size={50} name='chevron-right'color='white' onPress={() => {this.onPressDate('right')}} />
                 </View>
+
                 <ScrollView>
                     <View style={styles.container}>
 
@@ -115,14 +117,14 @@ class TournamentInfo extends Component {
                                                     <Text>{item.getTime()}</Text>
                                                     <View style={styles.gameInfo}>
                                                         <View style= {{padding: 20}}>
-                                                            <Text style={styles.text}>{item.getHomeName()}</Text>
+                                                            <Text style={styles.teamText}>{item.getHomeName()}</Text>
                                                         </View>
                                                             <Text style={styles.text}>{item.getHomeScore()}</Text>
                                                             <Text style={{fontSize: 10, fontWeight: 'bold', padding: 10}}> FINAL </Text>
                                                             <Text style={styles.text}>{item.getAwayScore()}</Text>
 
                                                         <View style= {{padding: 20}}>
-                                                            <Text style={styles.text}>{item.getAwayName()}</Text>
+                                                            <Text style={styles.teamText}>{item.getAwayName()}</Text>
                                                         </View>
                                                     </View>
                                                 </View>
@@ -181,6 +183,10 @@ const styles = StyleSheet.create({
         fontSize:25,
         color: 'black',
       },
+    teamText:{
+        fontSize:17,
+        color: 'black',
+    },
     orgButton:{
         alignItems: 'center',
         backgroundColor: '#FF3838',
@@ -191,13 +197,12 @@ const styles = StyleSheet.create({
         height: 100,
         width: 400,
     },
-    logoutButton:{
+    Button:{
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#1E90FF',
         height: 55,
         width:200,
-        borderRadius: 50,
         borderWidth: 2,
         borderColor: 'white',
     },

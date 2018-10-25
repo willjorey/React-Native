@@ -1,4 +1,4 @@
-import { db } from './database';
+import { db, URL } from './database';
 import Organization from '../components/Organization';
 import Game from '../components/Game';
 
@@ -26,8 +26,13 @@ import Game from '../components/Game';
             //     }
             // }}
 
-
-
+export const postGame = (key, game) => {
+    let date = game.getDate();
+    let away = game.getAwayName();
+    let home = game.getHomeName();
+    let t = game.getTime();
+    db.ref('/v1/Tournaments/' + key + '/' + date).push({aName: away, hName: home, time: t});
+};
 
 
 
@@ -96,5 +101,63 @@ export const getOrgsByKey = (that, subs) => {
     that.setState({
         subs: temp,
     })
-    console.log(temp)
+};
+
+// RESFTFUL API
+export const fetchOrgs = (that) =>{
+    let str = '/v1/Organizations.json';
+    fetch(URL + str).then((res) => res.json()).then((snapshot) => {
+        let list = [];
+        for (let key in snapshot){
+            let temp = snapshot[key];
+            let org = new Organization(key,temp.name);
+            org.setTournaments(temp.Tournaments);
+            org.setBanner(temp.banner);
+            list.push(org);
+        }
+        temp = list;
+        that.setState({
+            orgs:list
+        });
+        that.list = list;
+    });
+};
+
+export const fetchTournamentGamesBy_Date = (that, key, date) =>{
+    
+    // let str = '/v1/Tournaments/' + key + '.json?orderBy="$key"&equalTo=' + '"' + "Wed Oct 24 2018" + '"';
+    let str = '/v1/Tournaments/' + key + "/" + date + '.json';
+    let url = URL + str;
+    fetch(url).then((res) => res.json()).then((snapshot) => {
+        console.log(snapshot);
+        //Grab todays date games     
+        let list = [];   
+        for (let key in snapshot){
+            let game = snapshot[key];
+            let g = new Game(game.hName, game.aName, game.time);
+            list.push(g);
+        };
+        that.setState({
+            games: list
+        });
+    });
+};
+
+export const fetchOrgsByKey = (that, subs) => {
+    let temp = [];
+
+    for ( let i = 0; i < subs.length ; i++){
+        let str = '/v1/Organizations/' + subs[i].getKey() + '.json';
+        let url = URL + str;
+        fetch(url).then((res) => res.json()).then((snapshot) => {
+            console.log(snapshot);
+            let org = new Organization(subs[i].getKey(), snapshot.name);
+            org.setTournaments(snapshot.Tournaments);
+            org.setBanner(snapshot.banner);
+            temp.push(org);
+            that.setState({
+                subs: temp,
+            });
+        });
+    };
 };

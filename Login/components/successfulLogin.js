@@ -15,13 +15,11 @@ import {
 
 import { SearchBar, } from 'react-native-elements'
 
-import Organization from '../components/Organization';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {getOrgs} from '../db/services';
+import {fetchOrgs} from '../db/services';
 
 import * as Actions from '../actions'; //Import your actions
-import Tournament from './Tournament';
 
 class successfulLogin extends Component {
     constructor(props) {
@@ -37,7 +35,9 @@ class successfulLogin extends Component {
 
     componentDidMount = () => {
         //Fetch organizations from database
-        getOrgs(this);
+        fetchOrgs(this);
+
+        // getOrgs(this);
     }
 
     onItem = (org) =>{
@@ -68,6 +68,8 @@ class successfulLogin extends Component {
 
     };
 
+
+
     render() {
         return (
             <View style={StyleSheet.absoluteFill}>
@@ -79,7 +81,6 @@ class successfulLogin extends Component {
                                 placeholder='Search For Organization' />
                     </View>
                 </View>
-
                 <ScrollView>
                     <View style={styles.container}>
                         <View>
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
         height: 150,
         width:380,
     },
-    logoutButton:{
+    Button:{
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#1E90FF',

@@ -17,7 +17,10 @@ export default class Game{
     }
     getAwayName = () => {
         return this.aname;
-    }
+    };
+    setDate = (date) =>{
+        this.date = date;
+    };
     getDate = () =>{
         return this.date;
     };

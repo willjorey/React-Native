@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStackNavigator, DrawerItems} from 'react-navigation';
 import { ScrollView, SafeAreaView, Image, Dimensions, View , TouchableOpacity, Text} from 'react-native';
-import {bindActionCreators} from 'redux';
-import * as Actions from './actions';
 
 import TitleScreen from './screens/TitleScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -40,7 +38,8 @@ const DrawerComponent = (props) => {
         </TouchableOpacity>    
     </SafeAreaView>
     );
-} 
+}
+
 const drawer = new createDrawerNavigator({
     Home: {
         screen: MainScreen,

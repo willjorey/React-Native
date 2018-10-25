@@ -60,7 +60,7 @@ class newLogin extends Component {
                 if(this.state.pass.length > 3){
                     //Save user to firebase
                     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass).then( () => {
-                        let p = new Profile(this.state.name, this.state.email, this.state.user, this.state.pass);
+                        let p = new Profile(this.state.name, this.state.email, this.state.pass);
                         this.async.storeLogin(p);
                         ToastAndroid.showWithGravityAndOffset('Login Created',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
                         this.props.navigation.navigate('Login'); 
@@ -99,12 +99,6 @@ class newLogin extends Component {
                         <Text style={styles.textHeader}>E-mail</Text>
                         <View style={styles.loginContainer}>
                             <TextInput underlineColorAndroid="transparent" value={this.state.email} onChangeText={(value) => {this.setState({email: value})}}/>
-                        </View>
-                    </View>
-                    <View style={{padding:10}}>
-                        <Text style={styles.textHeader}>Enter Username</Text>
-                        <View style={styles.loginContainer}>
-                            <TextInput underlineColorAndroid="transparent" value={this.state.user} onChangeText={(value) => {this.setUsername(value)}}/>
                         </View>
                     </View>
 

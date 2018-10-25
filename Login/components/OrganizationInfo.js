@@ -77,7 +77,7 @@ class OrganizationInfo extends Component {
 
     //Navigate to desired tournament pressed, only if user is subscribed
     onOrgPress = (tourn) => {
-        if (this.state.subscribed === true){
+        if (this.state.subscribed === true || this.props.profile.getRole() === 'ADMIN'){
             this.props.navigation.navigate('Tournament', {tournament: tourn})
         }else{
             ToastAndroid.showWithGravityAndOffset('Subscribed Members Only',ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
