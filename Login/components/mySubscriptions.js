@@ -15,7 +15,7 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../actions'; //Import your actions
 
-import { getOrgsByKey, fetchOrgsByKey } from '../db/services';
+import { fetchOrgsByKey } from '../db/services';
 
 class mySubscriptions extends Component {
     constructor(props) {
@@ -29,7 +29,6 @@ class mySubscriptions extends Component {
     //Grab the profiles subscribed organization.
     componentDidMount = () => {
         fetchOrgsByKey(this, this.subs);
-        // getOrgsByKey(this, this.subs);
     }
 
     //Navigate to desired Organization pressed

@@ -36,8 +36,6 @@ class successfulLogin extends Component {
     componentDidMount = () => {
         //Fetch organizations from database
         fetchOrgs(this);
-
-        // getOrgs(this);
     }
 
     onItem = (org) =>{

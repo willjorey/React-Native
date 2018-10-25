@@ -56,52 +56,6 @@ export const getOrgs = (that) => {
 };
 
 
-export const getTournamentGamesBy_Key = (that,key) =>{
-    db.ref('/v1/Tournaments/' + key ).on("value", function(snapshot) {
-        let obj = snapshot.val();
-        that.tournament.setGames(obj);
-
-        //Grab todays date games
-        let temp;
-        for (let key in obj){
-            if (key === that.todayStr){
-                temp = obj[key];
-            }else{
-                temp = false
-            }
-        };
-
-        if (typeof temp === 'object'){
-            let list = [];
-            for (let key in temp){
-                let game = temp[key];
-                let g = new Game(game.hName, game.aName, game.time);
-                list.push(g);
-            };
-            that.setState({
-                games: list
-            })
-        }
-    });
-
-}
-
-export const getOrgsByKey = (that, subs) => {
-    let temp = [];
-    //for each organization key in subs, create an Organization obj and add to a list to be shown.
-    for (let i = 0; i < subs.length; i++){
-        db.ref('/v1/Organizations/' + subs[i].getKey()).on("value", function(snapshot) {
-            let obj = snapshot.val();
-            let org = new Organization(subs[i].getKey(), obj.name);
-            org.setTournaments(obj.Tournaments);
-            org.setBanner(obj.banner);
-            temp.push(org);
-        });
-    }
-    that.setState({
-        subs: temp,
-    })
-};
 
 // RESFTFUL API
 export const fetchOrgs = (that) =>{

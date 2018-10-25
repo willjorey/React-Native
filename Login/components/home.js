@@ -53,8 +53,9 @@ class Home extends Component {
         let that = this;
         // Firebase Login Authentication
         firebase.auth().signInWithEmailAndPassword(email, pass).then(function(user){
+            let uid = user.user.uid;
             //Retrieve profile saved on phone
-            that.async.getLogin(email).then( (value) => {
+            that.async.getLogin(uid).then( (value) => {
                 //Parse and create the profile object
                 let obj = JSON.parse(value);
                 let profile = new Profile();

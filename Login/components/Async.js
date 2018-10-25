@@ -3,16 +3,16 @@ export default class Async{
     constructor(){
 
     }
-    storeLogin = async (profile) => {
-        let email = profile.getEmail();
+    storeLogin = async (profile, uid) => {
         try {
-          return await AsyncStorage.setItem(email, JSON.stringify(profile));
+          return await AsyncStorage.setItem(uid, JSON.stringify(profile));
         } catch (error) {
           // Error saving data
         }
     };
     getLogin = async (key) =>{
         try{
+            console.log(key)
             let res = await AsyncStorage.getItem(key);
             return res;
         }catch(error){

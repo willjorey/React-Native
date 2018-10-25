@@ -3,7 +3,7 @@ const USER = 'USER';
 
 export default class Profile{
     constructor(name, email, password){
-        this.role;
+        this.role = USER;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -22,6 +22,10 @@ export default class Profile{
     }
     getPassword = () => {
         return this.password;
+    }
+
+    setEmail = (email) => {
+        this.email = email;
     }
 
     setName = (value) => {

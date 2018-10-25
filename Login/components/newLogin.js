@@ -11,7 +11,6 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 
-
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
@@ -28,7 +27,6 @@ class newLogin extends Component {
         this.state = {
             name: "",
             email: "",
-            user: "",
             pass: "",
             re_pass: "",
         };
@@ -46,7 +44,7 @@ class newLogin extends Component {
 
     };
     checkNonEmpty = () => {
-        if( this.state.name === "" || this.state.email === "" || this.state.user === "" || this.state.pass === ""){
+        if( this.state.name === "" || this.state.email === "" || this.state.pass === ""){
             return false;
         }else{
             return true;
@@ -56,24 +54,20 @@ class newLogin extends Component {
         if(this.checkNonEmpty()){
 
             if(this.state.pass === this.state.re_pass){
-
-                if(this.state.pass.length > 3){
                     //Save user to firebase
-                    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass).then( () => {
+                    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass).then( (user) => {
                         let p = new Profile(this.state.name, this.state.email, this.state.pass);
-                        this.async.storeLogin(p);
+                        this.async.storeLogin(p, user.user.uid);
                         ToastAndroid.showWithGravityAndOffset('Login Created',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
                         this.props.navigation.navigate('Login'); 
                     }).catch((error) => {
                         if(error.code === 'auth/email-already-in-use')
                             ToastAndroid.showWithGravityAndOffset('E-mail already in use',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
+
+                        if(error.code === 'auth/weak-password')
+                            ToastAndroid.showWithGravityAndOffset('Weak Password',ToastAndroid.LONG,ToastAndroid.TOP,25, 50);
                         console.log(error.code);
                     });
-
-
-                }else{
-                    ToastAndroid.showWithGravityAndOffset('Password is too short', ToastAndroid.LONG,ToastAndroid.TOP,25,50);
-                }
 
             }else{
                 ToastAndroid.showWithGravityAndOffset('Passwords Do not Match',ToastAndroid.LONG,ToastAndroid.TOP,25,50);
