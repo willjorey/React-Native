@@ -98,10 +98,10 @@ class Settings extends Component {
                     </View>
                 </View>
                     <TouchableOpacity style={styles.setAdmin} onPress={this.onUpdateProfile}>
-                        <Text>Update Profile</Text>
+                        <Text style={styles.text}>Update Profile</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.setAdmin} onPress={this.onPressAdmin}>
-                        <Text>Set as Admin</Text>
+                        <Text style={styles.text}>Set as Admin</Text>
                     </TouchableOpacity>
             </View>
 
@@ -148,20 +148,17 @@ const styles = StyleSheet.create({
         height: 150,
     },
     text:{
-        left:20,
-        top:90,
-        fontSize:25,
-        color: 'white',
+        fontSize:15,
+        color: '#1E90FF',
       },
     setAdmin:{
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#1E90FF',
+        backgroundColor: 'white',
         height: 55,
         width:200,
-        borderRadius: 50,
         borderWidth: 2,
-        borderColor: 'white',
+        borderColor: '#1E90FF',
     },
 
     inputContainer: {
